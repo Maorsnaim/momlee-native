@@ -64,7 +64,7 @@ deliberate human action.
 
 Directories:
 
-- **`skills/`** — 10 skills. The enforcement / trigger layer (incl.
+- **`skills/`** — 11 skills. The enforcement / trigger layer (incl.
   `momlee-worklog` — logs completed work to the Notion Dev Changelog and
   carries Sivan→Maor tasks).
 - **`commands/`** — `momlee-screen`, `momlee-sync-tokens`.
@@ -72,7 +72,9 @@ Directories:
   `figma`, `CHANGELOG`.
 - **`knowledge/`** — canonical project facts Maor maintains: `stack`,
   `architecture`, `integrations`, `security`, `privacy`, `conventions`,
-  `data-model`, `modules-roles`.
+  `data-model`, `modules-roles`, `dev-environment`, `data-inventory` (living
+  registry of every data point we collect — feeds the privacy policy + store
+  privacy labels).
 - **`planning/`** — `roadmap`, `features`, `open-tasks` (live status + pending
   actions — **read it on every plugin update**), `from-sivan` (Sivan→Maor
   tasks/updates channel).

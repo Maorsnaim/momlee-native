@@ -19,7 +19,7 @@ Sivan builds without a Mac, so **iOS builds and submission run in the Expo cloud
 ## iOS (App Store)
 
 - [ ] **Info.plist usage descriptions** for every permission requested, in Hebrew + clear purpose: location (`NSLocationWhenInUseUsageDescription`), camera (`NSCameraUsageDescription`, for KYC selfie), photos (`NSPhotoLibraryUsageDescription`), notifications. A missing/empty string = guaranteed rejection.
-- [ ] **App Privacy "nutrition" labels** accurately declare data collected (identity, contact, location, user content) and linkage/tracking. Must match what the app actually does.
+- [ ] **App Privacy "nutrition" labels** accurately declare data collected (identity, contact, location, user content) and linkage/tracking. Must match what the app actually does. **Source of truth: `../../knowledge/data-inventory.md`** (maintained continuously via **momlee-data-inventory**) — fill the labels from it, and reconcile any drift before submitting.
 - [ ] **Account deletion path is MANDATORY** — an in-app way to delete the account and associated data. Apple rejects apps without it.
 - [ ] **Age rating** set correctly for a community/social app with user-generated content.
 - [ ] **ATT (App Tracking Transparency)** prompt only if you actually track across apps; otherwise declare no tracking. Don't request it gratuitously.
