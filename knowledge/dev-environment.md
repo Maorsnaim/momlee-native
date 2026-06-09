@@ -75,7 +75,7 @@ pnpm --filter @momlee/mobile start      # run the mobile app (or: cd apps/mobile
 ```
 Then press `w` (web, no Mac), `a` (Android emulator), `i` (iOS Simulator — needs a Mac + full Xcode), or scan the QR with Expo Go.
 
-> **SDK version caveat:** the app is on a recent Expo SDK. Expo Go on an **older physical iPhone** may refuse to run it ("update Expo Go" / SDK mismatch) because the latest Expo Go needs a newer iOS. Options: run on the **iOS Simulator** (Mac), on **web**, or build an **EAS dev client** for the device. If older real-device support matters, consider pinning to an older, widely-supported SDK.
+> **SDK version — pinned to Expo SDK 54 (on purpose).** The app targets **Expo SDK 54** so the **App Store Expo Go runs it on a physical iPhone via QR — no Xcode, no dev build**. We tried SDK 56 first; the App Store Expo Go refused it ("Project is incompatible with this version of Expo Go") because the store app lags brand-new SDKs. Lesson: **stay on an SDK the store Expo Go supports** (currently 54) so both Maor and Sivan can test on real devices with plain Expo Go. Only bump the SDK once the store Expo Go supports it. (The iOS Simulator can run any SDK, so it's not a reliable signal for real-device compatibility.)
 
 ## Prerequisites (accounts)
 
