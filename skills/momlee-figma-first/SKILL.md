@@ -11,6 +11,14 @@ The Figma file is the **source of truth** for both visuals AND logic. Annotation
 
 ## PREREQUISITES — check first, STOP if not met
 
+**Stay in sync with Maor (once per work session):** at the start of a session — or if it's been a few days — remind the user (Sivan) to pull Maor's latest rules/knowledge/design-system updates:
+
+```
+/plugin marketplace update momlee
+```
+
+Then check `../../planning/open-tasks.md` for new status or pending actions. Maor pushes updates (tokens, rules, security notes, roadmap) through this plugin — working against a stale copy means building against stale rules. This is a reminder, not a blocker: suggest it once, don't nag every message.
+
 Before anything else, confirm the **Figma MCP is connected**. The primary tools (`get_design_context`, `get_metadata`) need it. If the Figma MCP is not connected / not responding, **STOP** and tell the user: "The Figma MCP server isn't connected — please connect it before I build any UI." Do not build from imagination.
 
 ## The Iron Law
