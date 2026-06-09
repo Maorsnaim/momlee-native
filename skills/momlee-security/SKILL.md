@@ -22,7 +22,7 @@ description: Use whenever you wire data or actions into MomLee — auth, roles, 
 11. **Rate limits** on `login`, `OTP`, `send message`, `create meetup`, `contact professional`, `report` (per-user / per-IP).
 12. **Verify storage ownership before signed URLs**; short expiry. Never sign a raw user-supplied path.
 13. **Sanitize free text** (bio, descriptions, messages, reviews) with limits. **Never render user-authored HTML.**
-14. **Deps hygiene** — `npm audit` / `npx expo-doctor`, pin versions, commit lockfile, review new deps.
+14. **Deps hygiene** — `pnpm audit` / `npx expo-doctor`, pin versions, commit the lockfile (`pnpm-lock.yaml`), review new deps.
 15. **TypeScript strict** — no `any`, especially in auth/roles/payments/API responses.
 
 Plus MomLee-specific rules 16–23 (KYC minimization, location/PII protection, children's data, least-privilege + signature-verified edge functions, web hardening, block/report as security, secrets management & rotation, audit logging) — see **momlee-privacy** for the data-protection detail.

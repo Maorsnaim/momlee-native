@@ -154,7 +154,7 @@ needs cleaning/limits. Never render user-authored HTML. If rich text is needed �
 ## 14. Dependencies
 Run:
 ```
-npm audit
+pnpm audit
 npx expo-doctor
 ```
 Don't install unfamiliar packages just because an AI suggested them. Pin versions, commit the lockfile, and review new dependencies. See `conventions.md` → "Only the stack".
@@ -175,7 +175,7 @@ Expanded with implementation guidance in `privacy.md`.
 - The verifications data is owner-read only; writes via service-role webhooks only.
 
 ### 17. Protect location & PII
-- Never expose exact coordinates of a user to others. Show approximate/relative distance, computed server-side (PostGIS). Precise location is private.
+- Never expose exact coordinates of a user to others. Show approximate/relative distance, computed server-side (PostGIS is the target; the current build uses decimal lat/lng + viewport bounds — see `data-model.md`). Precise location is private.
 - Phone, email, exact address, and `baby_birth_date` are private fields — never in public `select`s.
 
 ### 18. Children-related data is sensitive

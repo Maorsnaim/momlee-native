@@ -32,7 +32,7 @@ The active target is the **native Expo app**, shipping **iOS → Android → Web
 ## Stack discipline
 
 - Do **not** introduce a library/SDK/service that is not in `../../knowledge/stack.md` without explicit approval. First ask "does the stack already solve this?" (Supabase, Zod, NativeWind…).
-- Run `npm audit` / `npx expo-doctor`. Pin versions, commit the lockfile, review new deps.
+- Run `pnpm audit` / `npx expo-doctor`. Pin versions, commit the lockfile (`pnpm-lock.yaml`), review new deps.
 - TypeScript `strict` everywhere; no `any` (use `unknown` + narrowing) — especially in **auth, roles, payments**, and API responses. Zod is the source of truth for runtime validation (`z.infer` for the type).
 - Naming: files `kebab-case`, components `PascalCase`, hooks `useX`, packages `@momlee/<name>`. Full conventions: `../../knowledge/conventions.md`.
 

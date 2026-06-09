@@ -12,7 +12,7 @@ Status legend: **planned** · **in-progress** · **done**.
 |---------|--------|-------|
 | Mom onboarding flow | in-progress | Designed in Figma, **not final**; not built yet. Splash → Welcome → Phone → OTP → Name → BirthDate → BabyType. |
 | Phone auth + OTP | planned | Supabase + Twilio Verify. |
-| Identity verification | planned | External provider (Veriff/Persona), gates authenticated actions. |
+| Identity verification | planned | External provider (Persona leading / Stripe Identity), gates authenticated actions. |
 | Discover Meetups | planned | Map + list, viewport loading, filters. |
 | Discover Mothers | planned | Mom-to-mom discovery; favorite = one-way connection. |
 | Join / Create Meetup | planned | RSVP + create wizard. |

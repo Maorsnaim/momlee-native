@@ -20,6 +20,8 @@
 | spacing-lg | 12px | spacing |
 | radius-md | 8px | radius |
 
+> Note: `font-family/font-family-body` maps to the `fontFamily.sans` role token — always reference typography via the role token in code, never the raw family name.
+
 ## Typography
 
 - **Family:** Noto Sans Hebrew (OFL, full Hebrew coverage).

@@ -52,7 +52,7 @@ deliberate human action.
 
 ## Layout index
 
-These directories **will exist** once subsequent build steps populate them:
+Directories:
 
 - **`skills/`** — 9 skills. The enforcement / trigger layer.
 - **`commands/`** — `momlee-screen`, `momlee-sync-tokens`.
@@ -62,9 +62,6 @@ These directories **will exist** once subsequent build steps populate them:
   `architecture`, `integrations`, `security`, `privacy`, `conventions`,
   `data-model`, `modules-roles`.
 - **`planning/`** — `roadmap`, `features`.
-
-> Note: these are populated by subsequent build steps. This commit is the
-> skeleton only.
 
 ## How the channels work
 

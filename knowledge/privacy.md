@@ -14,7 +14,7 @@
 
 ## 2. Location privacy — never expose exact coordinates
 - A user's precise location is **private**. It is **never** returned to other users.
-- Discovery shows **approximate / relative distance only**, computed **server-side via PostGIS** — the raw coordinates never leave the server in a user-visible payload.
+- Discovery shows **approximate / relative distance only**, computed **server-side** (PostGIS is the target; the current build uses decimal lat/lng + viewport bounds — see `data-model.md`) — the raw coordinates never leave the server in a user-visible payload.
 - Implementation note: distance/geo math runs in Postgres (PostGIS), not in the client. The client receives a distance bucket or approximate value, not lat/lng of another user. (Mapbox renders the map; it is not the source of another user's coordinates.)
 - Meetup locations may show an address/area for the event, but a *person's* home/precise location is never broadcast.
 
