@@ -200,5 +200,16 @@ Expanded with implementation guidance in `privacy.md`.
 
 ---
 
+### 24. Applied hardening (2026-06-09 audit remediation)
+Fixed on branch `momlee-native` (commit `c432dad`); full report `docs/audit/SECURITY_FIXES_2026-06-09.md`, tracked in Notion → Engineering / Tech Debt. Concrete patterns now in the codebase — follow them:
+
+- **RLS is row-level, not column-level.** A broad SELECT policy on `users` exposed the *whole row* (email, phone) of every mom. To show a subset of columns to other users, use a dedicated VIEW with only safe columns — never a permissive policy on the PII table. Momlee pattern: `public.user_display_info` (id, display_name, avatar_url **ONLY**), owned by `postgres` so it bypasses `users` RLS by design. Meetup attendee display (`useMeetups`) joins this view, never `users`. **Never add a PII column to that view.** Moms' email/phone are admin-only.
+- **Verified provider contact info is public by design** (D4: lead = contact-intent). The `"Public can view provider user info"` policy is intentional — providers only, never moms.
+- **Sensitive document buckets are private + signed URLs** (reinforces rules 9 & 12). `certification-docs` / `provider-title-docs` are `public=false`; viewed via `getSignedDocumentUrl` (10-min expiry, owner/admin checked) + `openDocument()`. Stored URL strings are bucket+path identifiers, not directly fetchable.
+- **No service-role Edge Functions with open CORS** — six deprecated ones were deleted; geocoding moved to authenticated Next.js routes with per-user rate limiting (reinforces rules 11 & 19).
+- **Deploy-gating (critical):** a code fix is NOT live protection until deployed. Removing an Edge Function from the repo does **not** undeploy it; a migration must be run on the live DB; exposed tokens must be rotated. Always keep a deploy checklist (the migration + `functions delete` + token rotation) separate from the code merge.
+
+---
+
 ## The mental model
 > **Frontend = convenience. Backend = truth.** Any rule, permission, price, role, or status that matters is enforced on the server (Edge Function + RLS). The client only ever *requests*; the server *decides*.

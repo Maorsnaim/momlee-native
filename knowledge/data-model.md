@@ -19,6 +19,8 @@
 - `verification_status` (`pending` | `verified` | `rejected`)
 - `created_at`, `updated_at`
 
+> **Exposing display info to other users — use a safe view, not a broad policy.** Never expose the full `profiles` / `auth.users` row to other users (PII: phone, email, `baby_birth_date`, precise `location`). RLS is row-level, so to show only safe columns, expose a dedicated VIEW. The current web build does this with **`public.user_display_info`** (id, display_name, avatar_url ONLY) for meetup attendee lists — never add PII columns to it. Verified **provider** contact info is public by design (D4). See `security.md` §24.
+
 ### `pro_profiles` — professional details (1:1 with role=pro)
 - `profile_id` (FK), `profession`, `credentials`, `professional_verified` (bool)
 - `subscription_status` (`trialing` | `active` | `past_due` | `canceled`), `trial_ends_at`, `current_period_end`
