@@ -89,6 +89,7 @@ The Figma node already encodes most of the screen. **Read it from the file; neve
 | Handling KYC, location, PII, children's data, block/report, audit logging | **momlee-privacy** |
 | Preparing an App Store / Play submission | **momlee-store-release** |
 | Recording what you built (purpose, node mapping, tokens/components, decisions) | **momlee-docs** |
+| Finished a meaningful task → log it to the Notion Dev Changelog; leaving a task/update for Maor | **momlee-worklog** |
 
 ## Working preference
 Per the repo's working rules: **do not execute code changes without explicit user approval** — present a plan/proposal first, then implement on approval. Full conventions: `../../knowledge/conventions.md`.
