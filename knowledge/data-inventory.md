@@ -38,8 +38,8 @@ explicit approval).
 | Push token | Identifiers | Push notifications | profile (planned) | Yes | No | Expo Push (delivery) | Delete on logout |
 | Identity verification status | Sensitive Info | Trust — all users verified | `verifications` (status + provider ref ONLY) | Yes | No | Persona / Stripe Identity (they hold the raw ID docs/selfie — we never store them) | Owner-read; written by signed webhooks only |
 | Subscription status (providers) | Purchases | Provider monetization | provider/subscription columns | Yes | No | Stripe (processing) | Updated only via verified webhooks |
-| Analytics events (e.g. `onboarding_step_viewed`, `otp_requested`) | Usage Data | Product analytics | (analytics destination TBD) | TBD (prefer not linked) | **No** | TBD | Decide linkage before wiring an SDK; add rows per event payload that contains user data |
-| Crash/diagnostics | Diagnostics | Stability | (TBD — e.g. Sentry/EAS) | Prefer not linked | No | TBD | Add a row when a crash SDK is added |
+| Analytics events (e.g. `onboarding_step_viewed`, `otp_requested`) | Usage Data | Product analytics | **First-party Supabase events table** (decided 2026-06-10) | Yes (user id only — no PII in payloads) | **No** | — (no third-party SDK) | Event catalog lives in Figma annotations; add a row per event whose payload carries user data |
+| Crash/diagnostics | Diagnostics | Stability | **Sentry — decided, NOT installed yet** (deferred to the EAS dev-client stage to keep Expo Go working) | Prefer not linked | No | Sentry (when installed) | Update this row + privacy labels when the SDK actually lands |
 
 ## Not collected (declare as "not collected")
 

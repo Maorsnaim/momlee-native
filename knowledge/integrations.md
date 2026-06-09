@@ -24,6 +24,12 @@ ID / selfie verification for all users (moms + Pros). Two candidates:
 - **Decision pending.** Implemented behind a `verificationProvider` abstraction in `@momlee/core`, so swapping providers = swapping one implementation.
 - Store the verification **result only** (status + provider reference) — never raw ID documents or selfies. See `privacy.md`.
 
+## Analytics & Crash reporting — DECIDED 2026-06-10
+
+- **Analytics: first-party only.** Product events (e.g. `onboarding_step_viewed`, `otp_requested`) are written to our own Supabase events table — **no third-party analytics SDK**, nothing leaves our infrastructure, no tracking, no ATT. Event names/payloads are documented per screen in the Figma annotations; payloads must not contain PII beyond the user id.
+- **Crash reporting: Sentry — but NOT installed yet.** The Sentry SDK needs native code, which would break the Expo Go test path (see `dev-environment.md`). Install it **at the EAS dev-client stage**, not before. Until then: Expo error overlay in dev; EAS build logs.
+- Both decisions are reflected in `data-inventory.md` (Usage Data / Diagnostics rows). Changing either = Maor's decision + a data-inventory update first.
+
 ## Maps — Mapbox
 - Meetup discovery by distance, location picking on creation, map display.
 - Native: `@rnmapbox/maps`. Public token in env (`EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN`).
