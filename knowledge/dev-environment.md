@@ -57,6 +57,26 @@ A normal RN/iOS flow assumes a Mac (Xcode, iOS Simulator, local signing). We can
 
 This dovetails with stack discipline (`stack.md` / `conventions.md`): no unapproved native dependency, and any native addition is a deliberate decision because it changes the test path (Expo Go → dev client).
 
+## Monorepo install (pnpm) — required setup
+
+The repo is a **pnpm workspaces + Turborepo** monorepo. Two settings in the root `.npmrc` are **required** (already committed):
+
+```
+link-workspace-packages=true   # so @momlee/* resolve to local packages
+node-linker=hoisted            # flat node_modules so Metro/React Native can resolve transitive deps
+```
+
+**Why `node-linker=hoisted` matters:** React Native / Metro do **not** fully support pnpm's default symlinked `node_modules`. Without hoisting, the iOS/Android bundle fails with errors like `Unable to resolve "@expo/metro-runtime"`. The hoisted (flat) layout fixes it. If you ever see such a resolution error after changing deps: `rm -rf node_modules && pnpm install`.
+
+Setup:
+```text
+pnpm install                            # from the repo root
+pnpm --filter @momlee/mobile start      # run the mobile app (or: cd apps/mobile && pnpm start)
+```
+Then press `w` (web, no Mac), `a` (Android emulator), `i` (iOS Simulator — needs a Mac + full Xcode), or scan the QR with Expo Go.
+
+> **SDK version caveat:** the app is on a recent Expo SDK. Expo Go on an **older physical iPhone** may refuse to run it ("update Expo Go" / SDK mismatch) because the latest Expo Go needs a newer iOS. Options: run on the **iOS Simulator** (Mac), on **web**, or build an **EAS dev client** for the device. If older real-device support matters, consider pinning to an older, widely-supported SDK.
+
 ## Prerequisites (accounts)
 
 - **Apple Developer account** — required for TestFlight / App Store and for EAS to manage iOS signing credentials in the cloud.
