@@ -71,7 +71,8 @@ Directories:
 - **`knowledge/`** — canonical project facts Maor maintains: `stack`,
   `architecture`, `integrations`, `security`, `privacy`, `conventions`,
   `data-model`, `modules-roles`.
-- **`planning/`** — `roadmap`, `features`.
+- **`planning/`** — `roadmap`, `features`, `open-tasks` (live status + pending
+  actions — **read it on every plugin update**).
 
 ## How the channels work
 

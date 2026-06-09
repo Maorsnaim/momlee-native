@@ -60,6 +60,10 @@ Quality before speed.
 
 ## What's next
 
+> **First, read [`open-tasks.md`](open-tasks.md)** — live status + pending
+> actions (incl. the security-audit deployment steps still waiting on the
+> production environment).
+
 **Stand up the Expo / RN app foundation** — design tokens, RTL engine, shared UI
 layer — **and implement the Mom onboarding flow from Figma.** This is the active
 work item. Everything downstream waits on a working, RTL-correct, token-driven
