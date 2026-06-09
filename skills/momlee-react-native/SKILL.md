@@ -7,6 +7,10 @@ description: Use whenever you write or edit MomLee native app code (Expo / React
 
 The active target is the **native Expo app**, shipping **iOS → Android → Web** with maximum reuse and minimum duplication. The web app is shelved (same tokens/logic apply when it returns).
 
+## Dev environment (no Mac)
+
+Sivan builds **without a Mac**, so the iOS path stays in the cloud. **Stay in the Expo managed workflow + config plugins — do NOT run `expo prebuild` / go bare**, and don't add Mac-only steps. Test via **Expo Go** (web + Android emulator + real iPhone QR); when a custom native module / config plugin makes Expo Go insufficient, use an **EAS-built dev client** (still cloud, still no Mac). iOS builds/submits run via **EAS cloud** (`eas build/submit -p ios`). **Deep native iOS debugging, iOS Simulator, and Xcode work are Maor's.** Full detail: `../../knowledge/dev-environment.md`. Native work is on the **`momlee-native`** branch.
+
 ## Stack (no surprises)
 
 - **Native:** React Native + **Expo** (Expo Router). **Styling:** NativeWind + Tailwind tokens. **Sheets/modals:** `@gorhom/bottom-sheet` wrapped in a `@momlee/ui` `Sheet`.

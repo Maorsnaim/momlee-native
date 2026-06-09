@@ -65,6 +65,11 @@ layer — **and implement the Mom onboarding flow from Figma.** This is the acti
 work item. Everything downstream waits on a working, RTL-correct, token-driven
 foundation on iOS.
 
+> **Native work happens on the `momlee-native` branch.** Sivan builds without a
+> Mac, so the build/release path is **EAS cloud** (`eas build/submit -p ios`,
+> `eas build -p android`); test via Expo Go / EAS dev client. Stay in the Expo
+> managed workflow (no `expo prebuild`). See `../knowledge/dev-environment.md`.
+
 ## Open decisions
 
 | # | Decision | Status |

@@ -7,6 +7,15 @@ description: Use BEFORE submitting the MomLee app to the Apple App Store or Goog
 
 Run this checklist **before each submission**. A miss here is a rejection or a privacy incident.
 
+## How we build & submit (no Mac → cloud)
+
+Sivan builds without a Mac, so **iOS builds and submission run in the Expo cloud**:
+
+- **Build:** `eas build -p ios` (EAS Build) — compiles on Apple hardware in the cloud, **no Mac / no Xcode**. **EAS manages signing credentials remotely** (certs + provisioning profiles).
+- **Submit:** `eas submit -p ios` — uploads the cloud build to **TestFlight / App Store** (no Transporter/Xcode).
+- **Android:** `eas build -p android` → `eas submit -p android` (Google Play).
+- **Prerequisites:** an **Apple Developer account** (TestFlight/App Store + EAS credential management) and an **Expo (EAS) account**; a **Google Play Developer account** for Android. Stay in the managed workflow — don't `expo prebuild`. Full division of labor + command reference: `../../knowledge/dev-environment.md`.
+
 ## iOS (App Store)
 
 - [ ] **Info.plist usage descriptions** for every permission requested, in Hebrew + clear purpose: location (`NSLocationWhenInUseUsageDescription`), camera (`NSCameraUsageDescription`, for KYC selfie), photos (`NSPhotoLibraryUsageDescription`), notifications. A missing/empty string = guaranteed rejection.

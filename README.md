@@ -28,7 +28,15 @@ Before this plugin is useful, Sivan needs:
 
 - **Figma MCP connected**, with the **Figma skills available** (e.g.
   `figma-use`).
-- An **Expo / React Native** project to build into.
+- An **Expo / React Native** project to build into. Native work happens on the
+  **`momlee-native`** branch of the app repo.
+- Accounts: an **Apple Developer account**, an **Expo (EAS) account**, and a
+  **Google Play Developer account**.
+
+> **Sivan develops without a Mac** — iOS builds/submits run in the Expo EAS
+> cloud (`eas build/submit -p ios`); test via Expo Go (web + Android emulator +
+> real iPhone). Stay in the managed workflow (no `expo prebuild`). See
+> `knowledge/dev-environment.md`.
 
 ## Install (Sivan, once)
 
