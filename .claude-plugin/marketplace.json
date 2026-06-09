@@ -1,0 +1,14 @@
+{
+  "name": "momlee",
+  "owner": { "name": "Maor" },
+  "description": "MomLee internal plugin marketplace.",
+  "plugins": [
+    {
+      "name": "momlee-dev",
+      "source": "./",
+      "description": "MomLee development skills + living Design System / knowledge / planning channels.",
+      "version": "0.1.0",
+      "author": { "name": "Maor" }
+    }
+  ]
+}
