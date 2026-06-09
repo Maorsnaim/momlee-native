@@ -49,6 +49,26 @@ Before writing a single line of UI code, you MUST pull context from Figma. No ex
 2. **Reuse before create.** A design change happens in one place.
 3. **Annotations = logic.** Implement every state and edge case the annotations describe.
 
+## Derive from Figma vs annotate (do NOT duplicate)
+
+The Figma node already encodes most of the screen. **Read it from the file; never require a per-screen list of components in annotations.**
+
+**Derived automatically from the node (NOT written in annotations):**
+- **Screen name + state** — from the frame name, format `NN_Module/Sub/Screen/State` (e.g. `03_Onboarding/Mom/Phone/Empty`). The trailing segment is the state.
+- **Component instances + variants** — from layer/component names (e.g. `Forms/PhoneField`, `Forms/CountryDropdown/iOS/Unselected/HE`, `CTA Next button`).
+- **Layout, hierarchy, spacing, sizes, text content.**
+- **Tokens/variables by name** (e.g. `colors/text/input/empty`, `spacing-xl`, `radius-md`).
+- **Code-Connected components** → use the mapped `@momlee/ui` component directly. The frame's `data-development-annotations` attribute carries the logic annotation — read it.
+
+**Annotations carry ONLY the logic layer** (full format: `../../design-system/annotations.md`): Purpose · Backend (calls/provider/abstraction) · Data (exact DB names) · Validation rules (`R1…`) · Events · Edge cases · Permissions · Privacy/Consent · what each CTA does next.
+
+**Rule:** an annotation is *logic, not inventory*. Name components once in the library; read instances from the tree.
+
+### Naming conventions
+- **Screen frames:** `NN_Module/Sub/Screen/State` — e.g. `03_Onboarding/Mom/Phone/Empty`, `08_Onboarding/Mom/Phone/UnsupportedCountryError`.
+- **Components:** `Domain/Component/Platform/Variant/Locale` — e.g. `Forms/CountryDropdown/iOS/Unselected/HE`, `Forms/PhoneField`.
+- Map each component to `@momlee/ui` via **Code Connect** (figma-code-connect) so every instance resolves to real code automatically — then component reuse needs no annotation at all.
+
 ## ROUTING — which companion skill applies
 
 | When you are… | Use skill |

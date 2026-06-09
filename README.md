@@ -1,8 +1,8 @@
-# momlee-dev — MomLee development plugin
+# momlee-guide — MomLee development plugin
 
 ## What it is
 
-`momlee-dev` is a **shared Claude Code plugin** that acts as the development
+`momlee-guide` is a **shared Claude Code plugin** that acts as the development
 "contract" and communication layer between two people:
 
 - **Maor** — defines the rules, the design system, the project knowledge, and
@@ -41,9 +41,11 @@ Before this plugin is useful, Sivan needs:
 ## Install (Sivan, once)
 
 ```
-/plugin marketplace add /path/to/momlee-dev        (or the git repo: /plugin marketplace add <owner/repo>)
-/plugin install momlee-dev@momlee
+/plugin marketplace add Maorsnaim/momlee-guide
+/plugin install momlee-guide@momlee
 ```
+
+(`momlee-guide` is the plugin name; `momlee` is the marketplace name.)
 
 ## Update flow
 
@@ -52,7 +54,7 @@ Before this plugin is useful, Sivan needs:
 3. **Sivan** runs:
    ```
    /plugin marketplace update momlee
-   /plugin install momlee-dev@momlee
+   /plugin install momlee-guide@momlee
    ```
 
 Nothing is pushed automatically by anyone's assistant — every step is a
