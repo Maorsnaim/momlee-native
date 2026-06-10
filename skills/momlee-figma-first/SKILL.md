@@ -23,6 +23,12 @@ Before anything else, confirm the **Figma MCP is connected**. The primary tools 
 
 ## The Iron Law
 
+> **Annotations are part of the pull — never skip them.** If a node's design
+> context is too large to read inline, EXTRACT the `data-development-annotations`
+> / `data-behavior-annotations` attributes from the saved output anyway (grep
+> the file). Skipping them cost us a full rework once (bottom sheet instead of
+> the annotated type-to-search dropdown, missing Israel default).
+
 Before writing a single line of UI code, you MUST pull context from Figma. No exceptions, no "this is simple enough."
 
 ## The MomLee Figma file

@@ -67,3 +67,10 @@ Keep the runtime calls as a safety net for dev-client/standalone builds, but nev
 Related bidi rules (same lesson):
 - A Hebrew paragraph that STARTS with a Latin word (e.g. "Momlee יוצרת...") needs `style={{ writingDirection: 'rtl' }}` or the first-strong-character heuristic lays it out LTR.
 - Digit/phone rows and brand-icon rows that must stay visually LTR get an explicit `style={{ direction: 'ltr' }}` — don't rely on the ambient direction.
+
+## The AppText primitive (mandatory pattern)
+
+RTL is enforced by ONE primitive, not per-screen patches: every user-facing
+text goes through **`AppText`** (`apps/mobile/src/components/AppText.tssx` — fix path if moved), which applies `writingDirection:'rtl'` + **`textAlign:'auto'`** by default with an `align` prop (`right`|`center`|`ltr`). Raw `Text` from react-native is allowed only inside AppText/UnderlineField internals; textAlign utility classNames are forbidden.
+
+**Why `auto` and not `right`:** with native RTL active, React Native treats `textAlign 'left'/'right'` LOGICALLY — `'right'` renders at the **visual left**. `'auto'` follows the layout direction (RTL → visual right). This was verified by pixel measurement on the simulator; don't "fix" it back.
