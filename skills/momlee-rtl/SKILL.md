@@ -52,3 +52,18 @@ Because direction is locale-derived and all edges are logical, enabling LTR is a
 - **Test every screen in RTL**, plus an LTR smoke test to confirm the switch holds.
 
 Conventions: `../../knowledge/conventions.md`. i18n package: `../../knowledge/architecture.md`.
+
+## ⚠️ Expo Go: runtime forceRTL is NOT enough (learned 2026-06-10)
+
+`I18nManager.allowRTL/forceRTL` **does not flip layout in Expo Go** — the host app sets direction natively before JS runs. The REQUIRED mechanism is the manifest:
+
+```json
+// app.json → expo
+"extra": { "supportsRTL": true, "forcesRTL": true }
+```
+
+Keep the runtime calls as a safety net for dev-client/standalone builds, but never trust them alone. **Symptom of missing manifest flags:** the whole app silently renders LTR (rows mirrored vs Figma) while Hebrew text still right-aligns — verify direction with a layout element (e.g. where a row's first child lands), not with text alignment.
+
+Related bidi rules (same lesson):
+- A Hebrew paragraph that STARTS with a Latin word (e.g. "Momlee יוצרת...") needs `style={{ writingDirection: 'rtl' }}` or the first-strong-character heuristic lays it out LTR.
+- Digit/phone rows and brand-icon rows that must stay visually LTR get an explicit `style={{ direction: 'ltr' }}` — don't rely on the ambient direction.
