@@ -30,6 +30,23 @@ ID / selfie verification for all users (moms + Pros). Two candidates:
 - **Crash reporting: Sentry — but NOT installed yet.** The Sentry SDK needs native code, which would break the Expo Go test path (see `dev-environment.md`). Install it **at the EAS dev-client stage**, not before. Until then: Expo error overlay in dev; EAS build logs.
 - Both decisions are reflected in `data-inventory.md` (Usage Data / Diagnostics rows). Changing either = Maor's decision + a data-inventory update first.
 
+## Onboarding funnel analytics (first-party) — planned schema
+
+Goal: know where users ABANDON onboarding (per-step funnel dashboard; push
+re-engagement for abandoners). First-party only (see Analytics decision above).
+
+- Table `onboarding_events`: `id uuid pk` · `anon_id uuid` (device-generated
+  before auth, stored in AsyncStorage) · `user_id uuid null` (linked after
+  auth) · `event text` (`onboarding_step_viewed` / `otp_requested` / …) ·
+  `step text` · `payload jsonb` · `created_at timestamptz`. Index `(event, step, created_at)`.
+- Client: `logEvent()` writes here (anon insert policy, INSERT-only; payloads
+  carry NO PII beyond ids — see data-inventory).
+- Abandonment = latest step per anon/user with no later step within X hours →
+  feeds a funnel dashboard and a push re-engagement job (push token only
+  exists after permission + auth).
+- Status: `logEvent` is currently a console stub — the table + wiring are the
+  next backend step alongside OTP.
+
 ## Maps — Mapbox
 - Meetup discovery by distance, location picking on creation, map display.
 - Native: `@rnmapbox/maps`. Public token in env (`EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN`).

@@ -43,3 +43,15 @@ Sivan builds **without a Mac**, so the iOS path stays in the cloud. **Stay in th
 ## Roles
 
 Two surfaces — **mom** and **pro** (pro also gets a dashboard: stats, payments, create pro-meetups, edit profile). Share logic, separate composition. Role comes from the server, never client input. See `../../knowledge/modules-roles.md`.
+
+## Onboarding page container — the verified keyboard model (2026-06-10)
+
+Per the Figma "iOS Onboarding Page Template" (and owner decision): logomark,
+heading, content and the CTA live in **ONE container** whose height is the
+screen **minus the keyboard** (KeyboardAvoidingView `padding`). Rules:
+- CTA pinned to the container bottom via a **collapsible spacer** (`flexGrow:1, flexShrink:1, flexBasis:0`).
+- Content keeps natural height (RN default `flexShrink:0`) — it must NEVER compress or be overlapped.
+- Container is `overflow-hidden`: when content is taller than the container (keyboard + open dropdown), the CTA **clips out of view** — it must NOT float above fields. When there's room (phone field focused) it shows above the keyboard.
+- Tap anywhere outside an input dismisses the keyboard (`Pressable accessible={false}` wrapper).
+- iOS TextInput metrics: shared INPUT_TEXT_STYLE (tight lineHeight, zero intrinsic padding, underline on the wrapper); icon/flag alignment = padding on the ROW, not the text.
+Implementation reference: `apps/mobile/src/components/PageTemplate.tsx`.
