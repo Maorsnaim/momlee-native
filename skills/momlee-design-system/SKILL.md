@@ -38,3 +38,11 @@ If a value you need has no token: **add it in Figma first**, then mirror it in `
 3. `/momlee-sync-tokens` can draft the snapshot/CHANGELOG update from the live Figma values for review.
 
 Keep the snapshot and CHANGELOG honest — they are the offline contract between the two maintainers.
+
+## Fonts on native — loading is NOT optional (learned 2026-06-10)
+
+Declaring `fontFamily: 'Noto Sans Hebrew'` in tokens does NOTHING by itself on
+native — RN silently falls back to the system font. Requirements:
+1. Load the font in `_layout` via `@expo-google-fonts/noto-sans-hebrew` + `useFonts`, holding the splash until loaded.
+2. **iOS does not map `fontWeight` onto custom fonts** — each weight is its own family (`NotoSansHebrew_500Medium`…). Weight selection lives in the `AppText` `weight` prop; `font-medium/semibold/bold` classNames are forbidden.
+3. Verify by LOOKING at the rendered letterforms vs Figma — system-font fallback is silent.
