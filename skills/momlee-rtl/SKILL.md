@@ -5,6 +5,14 @@ description: Use whenever you write or edit ANY MomLee UI that involves layout, 
 
 # MomLee RTL — RTL-first (he-IL)
 
+> ## 🚨 TOP PRIORITY — RTL must NEVER regress (Maor, explicit)
+> An RTL bug is **release-blocking**, not polish. Before declaring ANY screen
+> done, run the **RTL verification gate**:
+> 1. **Manifest check:** `app.json → expo.extra: { supportsRTL: true, forcesRTL: true }` exists. Runtime `I18nManager.forceRTL` alone does NOTHING in Expo Go.
+> 2. **Layout probe:** check where a row's FIRST child lands — it must be on the visual RIGHT. Do not judge by text alignment (Hebrew right-aligns even in LTR).
+> 3. **Pixel measurement:** screenshot the simulator and measure a heading's right edge against the container edge (e.g. PIL band-bounds). "Looks right" is not verification.
+> 4. **Text primitive:** all text goes through the AppText primitive (textAlign 'auto' — physical 'right' FLIPS to visual left under native RTL).
+
 MomLee is **RTL-first (he-IL)**. LTR (future expansion) must be a **single switch** — never a per-screen rewrite.
 
 ## Logical properties ONLY
