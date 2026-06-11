@@ -71,9 +71,9 @@ FULL scale confirmed from the Typography sheet (node 1023:36715, 2026-06-11):
 - `Buttons/Button` (all hierarchies): padding `14px/10px` — neither 10 nor 14 exists in the spacing scale (…8, 12, 16…).
 - `Buttons/Social button`: raw `gap: 10px` between label and logo.
 
-**Set↔screen contradiction (Maor to reconcile):** `_Mega input field base`
-types its digit `display-lg` (48/60, -2% tracking) but the OTP screen
-instances render 30/38 (display-sm). Code follows the SCREEN.
+**RESOLVED (2026-06-12):** Maor fixed the OTP field set — new `xs` variant
+(64 box, display-sm digits) matches the screens; component renamed `OTP Field
+base`. New tokens: `border-brand_alt` + `text-brand-tertiary_alt` (#b05f64).
 
 **Per-screen issues:**
 

@@ -144,9 +144,12 @@ screen tests in `apps/mobile/src/app/__tests__/phone.test.tsx`.
 
 1. **Autofocus**: the screen opens with the keyboard up and the first
    (leftmost) cell already active — no extra tap.
-2. **Active cell = Filled styling** (not the set's ringed Focused) — Maor's
-   visual call for this screen; MegaInputField keeps the Focused variant.
-3. **Auto-fill & auto-advance**: the moment the 6-digit code completes —
+2. **Active cell = the REAL Focused state** (2px border-brand-alt, no ring)
+   — Maor fixed the set (xs variant, 2026-06-12) and REVERSED the earlier
+   'render as Filled' interim call. Focused ≠ Filled: darker border + digit.
+3. **Visible last digit**: auto-submit waits ~450ms after the 6th digit so
+   the user SEES it land before the screen advances (Maor, 2026-06-12).
+4. **Auto-fill & auto-advance**: the moment the 6-digit code completes —
    typed OR SMS-autofilled (`textContentType="oneTimeCode"` iOS QuickType,
    `autoComplete="sms-otp"` Android) — verification runs and the user
    advances automatically. Zero taps after the SMS arrives (iOS QuickType
