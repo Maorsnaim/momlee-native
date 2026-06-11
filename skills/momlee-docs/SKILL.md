@@ -14,6 +14,7 @@ Documentation is part of "done", not a later chore. Keep it **concise > exhausti
 - **Tokens & components used** — which `@momlee/tokens` and `@momlee/ui` primitives the screen relies on.
 - **States & edge cases implemented** — loading/empty/error/full and any annotation-driven conditions (so the build can be checked against `../../design-system/annotations.md`).
 - **Decisions** — anything non-obvious chosen during the build (and why), especially deviations or open questions.
+- **Events & KPI** — the events the feature emits and the KPI it moves (the Analytics Gate block from **momlee-analytics**, including verification status).
 
 ## Update the living docs
 

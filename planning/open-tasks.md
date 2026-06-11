@@ -36,6 +36,17 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## Analytics Gate (2026-06-11) — NEW, every feature answers 3 questions
+
+New skill **momlee-analytics** + new channel `knowledge/analytics.md`: every
+feature, at PLAN time, prints an `ANALYTICS GATE` block — which events
+(`object_action`, snake_case, no PII beyond user_id/anon_id), how we verify
+(query the events table, see the rows land), and which success KPI it moves
+(traced to the North Star: WSMA, proxy weekly joins). First-party only stays
+locked. No event spec for a feature = propose + ask Maor, never invent or skip.
+Feature isn't "done" until the events are SEEN landing. No action needed beyond
+updating the plugin.
+
 ## Migration Gate (2026-06-11) — NEW, hard gate before any DB change
 
 New skill **momlee-migration**: every database change (table/column, RLS
