@@ -104,6 +104,7 @@ The Figma node already encodes most of the screen. **Read it from the file; neve
 | Finished a meaningful task → log it to the Notion Dev Changelog; leaving a task/update for Maor | **momlee-worklog** |
 | Adding ANY new data collection: table/column, SDK, permission, analytics event | **momlee-data-inventory** |
 | Something is MISSING from Figma/the docs (component, token, rule, copy, name) or you're about to assume | **momlee-prompt-guard** |
+| Spotted an EXISTING inconsistency (naming, duplicates, drift, legacy patterns); finishing structural work; asked to review architecture | **momlee-architecture-review** |
 
 ## Working preference
 Per the repo's working rules: **do not execute code changes without explicit user approval** — present a plan/proposal first, then implement on approval. Full conventions: `../../knowledge/conventions.md`.

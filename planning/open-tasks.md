@@ -36,6 +36,18 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## Architecture & Naming Review Obligation (2026-06-11) — NEW skill
+
+New skill **momlee-architecture-review**: during ANY task, existing
+inconsistencies (naming conflicts, duplicate concepts, drift, legacy patterns,
+architectural violations) must be surfaced — never silently ignored. Protocol:
+continue on the canonical convention, no automatic refactors, no renames
+without approval, document + recommend in the "Architecture Observations"
+format (Issue / Impact / Recommendation / Priority), and log durable findings
+to the worklog so Maor sees them. Consistency over perfection — but obvious
+better directions get surfaced, not buried. No action needed beyond updating
+the plugin.
+
 ## Core Technology Stack — Iron Law (2026-06-11, Maor) — READ stack.md
 
 `knowledge/stack.md` now carries the full canonical stack rules: Expo Router
