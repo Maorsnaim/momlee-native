@@ -46,14 +46,24 @@ Tailwind/NativeWind preset. Items marked *provisional* were not observed yet.
 Family: **Noto Sans Hebrew** (OFL). Weights in use: 400 / 500 / 600 / 700.
 Reference ONLY via the `fontFamily.sans` role token.
 
+FULL scale confirmed from the Typography sheet (node 1023:36715, 2026-06-11):
+
 | Size token | px / line-height |
 |---|---|
 | text-xs | 12 / 18 |
 | text-sm | 14 / 20 |
 | text-md | 16 / 24 |
-| text-lg | 18 / 32 (inputs use line-height/display-xs) |
+| text-lg | 18 / 28 |
 | text-xl | 20 / 30 |
-| display-xs | 24 (provisional) / 32 |
+| display-xs | 24 / 32 |
+| display-sm | 30 / 38 (OTP digits) |
+| display-md | 36 / 44 |
+| display-lg | 48 / 60 |
+| display-xl | 60 / 72 |
+| display-2xl | 72 / 90 |
+
+> Component-level overrides are not scale changes: the Input uses a tighter
+> line-height on iOS (INPUT_TEXT_STYLE, owner-approved deviation).
 
 ## ⚠️ Gaps found in Figma (for Maor to fix in the file)
 
