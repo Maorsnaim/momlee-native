@@ -96,6 +96,7 @@ The Figma node already encodes most of the screen. **Read it from the file; neve
 | Anything directional: layout, logical props, i18n strings, `dir`/`I18nManager`, RTL QA | **momlee-rtl** |
 | Accessibility: roles, labels, hit targets, contrast, focus order, Dynamic Type | **momlee-accessibility** |
 | Wiring data/actions, auth, roles, validation, RLS, secrets, webhooks | **momlee-security** |
+| ANY database change: table/column, RLS policy, enum, view, bucket (Migration Gate) | **momlee-migration** |
 | Handling KYC, location, PII, children's data, block/report, audit logging | **momlee-privacy** |
 | Preparing an App Store / Play submission | **momlee-store-release** |
 | Recording what you built (purpose, node mapping, tokens/components, decisions) | **momlee-docs** |

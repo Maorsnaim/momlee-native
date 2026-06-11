@@ -36,6 +36,16 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## Migration Gate (2026-06-11) — NEW, hard gate before any DB change
+
+New skill **momlee-migration**: every database change (table/column, RLS
+policy, enum, view, bucket, schema-touching Edge Function) must print a
+`MIGRATION GATE` block BEFORE any SQL: migration file + rollback plan + RLS
+impact + affected tables + affected APIs. New tables ship RLS in the same
+migration; destructive changes need a backup step + Maor's approval; the live
+DB stays Maor-coordinated; `database.types.ts` is regenerated before and after.
+No action needed beyond updating the plugin.
+
 ## Component Reuse Audit (2026-06-11) — NEW, hard gate before any new component
 
 "Reuse before create" is now a **proven audit**, not a guideline (upgraded in

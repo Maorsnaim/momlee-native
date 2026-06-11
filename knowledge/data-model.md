@@ -4,6 +4,8 @@
 
 > Every table gets **RLS from day one** (see `security.md` / `privacy.md`). Access from app code is **through `@momlee/supabase` only** (queries/mutations/RPC + generated types) — no SQL or direct calls from `apps/*`.
 >
+> **Any change to this schema goes through the Migration Gate** (`../skills/momlee-migration/SKILL.md`): migration file + rollback plan + RLS impact + affected tables + affected APIs, proven before SQL is written. After every applied migration, section B below is updated and `database.types.ts` is regenerated.
+>
 > This file has two parts: **(A) the target native-first model** (the design we work toward), and **(B) the actually-implemented tables** in `supabase/migrations/` today (the web-era build, now shelved). They overlap heavily; where they differ, B is the current ground truth and A is the direction.
 
 ---
