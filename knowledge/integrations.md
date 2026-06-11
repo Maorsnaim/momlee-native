@@ -47,6 +47,23 @@ re-engagement for abandoners). First-party only (see Analytics decision above).
 - Status: `logEvent` is currently a console stub — the table + wiring are the
   next backend step alongside OTP.
 
+## Phone Auth implementation patterns (in code, 2026-06-10)
+
+- `apps/mobile/src/lib/supabase.ts` — **lazy, fail-soft client**: returns null
+  without env keys so the app still runs (Expo Go demos/tests); auth/analytics
+  degrade to console warnings. Session in AsyncStorage, autoRefresh+persist.
+- `lib/auth.ts` — `requestOtp(e164)` / `verifyOtp(e164, code)` wrap Supabase
+  Phone Auth (Twilio Verify configured server-side only). UI resend cooldown
+  is UX; the real rate limit is server-side.
+- `lib/anon.ts` — device `anon_id` (AsyncStorage + expo-crypto) created BEFORE
+  auth; every funnel event carries it; `user_id` joins after verification.
+- OTP input: hidden TextInput with `textContentType="oneTimeCode"` +
+  `autoComplete="sms-otp"` → iOS offers the SMS code above the keyboard.
+- To go live E2E: Twilio Verify keys in Supabase Dashboard → Auth → Providers
+  → Phone; mobile `.env`; apply migration `20260610120000` (onboarding_events
+  + verified-phone mirror); regenerate `@momlee/supabase` types and drop the
+  temporary cast in `lib/analytics.ts`.
+
 ## Maps — Mapbox
 - Meetup discovery by distance, location picking on creation, map display.
 - Native: `@rnmapbox/maps`. Public token in env (`EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN`).

@@ -77,6 +77,18 @@ Then press `w` (web, no Mac), `a` (Android emulator), `i` (iOS Simulator — nee
 
 > **SDK version — pinned to Expo SDK 54 (on purpose).** The app targets **Expo SDK 54** so the **App Store Expo Go runs it on a physical iPhone via QR — no Xcode, no dev build**. We tried SDK 56 first; the App Store Expo Go refused it ("Project is incompatible with this version of Expo Go") because the store app lags brand-new SDKs. Lesson: **stay on an SDK the store Expo Go supports** (currently 54) so both Maor and Sivan can test on real devices with plain Expo Go. Only bump the SDK once the store Expo Go supports it. (The iOS Simulator can run any SDK, so it's not a reliable signal for real-device compatibility.)
 
+## Daily dev loop (no QR re-scanning)
+
+- Start ONE long-lived server on the FIXED port: `cd apps/mobile && pnpm dev`
+  (= `expo start --port 8090`). Keep that terminal open.
+- Phone: scan the QR **once**; afterwards reconnect via **Expo Go → Recently
+  opened → momlee** — no rescan, and code changes hot-reload (Fast Refresh).
+- Rules that keep this working: don't change the port; don't run multiple
+  servers; assistants/CI must NEVER `pkill -f "expo start"` (it kills the
+  developer's server) — kill only your own dedicated port (e.g. 8099) by PID.
+- `ERR_PNPM_RECURSIVE_EXEC_NO_PACKAGE` = you're OUTSIDE the workspace (e.g. a
+  parent folder). Run pnpm from inside the repo (`MomLee/...`).
+
 ## Prerequisites (accounts)
 
 - **Apple Developer account** — required for TestFlight / App Store and for EAS to manage iOS signing credentials in the cloud.
