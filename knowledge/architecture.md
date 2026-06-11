@@ -81,3 +81,23 @@ apps/web   ──┤→ features → ui → tokens
 
 ## Access from code
 Remote/server state goes **through `@momlee/supabase` only** (queries/mutations/RPC + generated types). No SQL or direct Supabase calls from `apps/*`.
+
+## Mobile component taxonomy (mirrors the Figma design system)
+
+```
+apps/mobile/src/components/
+├── base/        # ❖ Base Components (Figma base sets): AppText, Button, Input,
+│                #   Icon, BrandMark, ProgressBar
+├── app/
+│   ├── forms/   # Forms/* compositions: PhoneField, CountryDropdown, OtpInput, flags
+│   ├── templates/  # one file per Figma template: OnboardingPageTemplate
+│   │               # (post-onboarding flows get their OWN template files here)
+│   └── LegalText.tsx  # app-specific blocks
+```
+Variables live in `packages/tokens` (@momlee/tokens). Figma names = file/component names.
+
+**Icons policy:** icons come ONLY from the Figma Icons library (node 3463:407484),
+downloaded as currentColor SVGs into `assets/icons/` and exposed via `base/Icon`
+(with SEMANTIC `forward`/`backward`). Never substitute look-alike glyphs from
+other icon packs (the early Ionicons stand-ins were replaced).
+
