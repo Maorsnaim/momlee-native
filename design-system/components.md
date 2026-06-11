@@ -31,7 +31,7 @@ From the Mom onboarding Figma. **All are "planned" — not built yet.**
 | AppText | THE text primitive — RTL base, align (right/center/ltr), weight (Noto per-family) | every user-facing text |
 | PageTemplate | onboarding chrome: heart, heading, content, CTA; keyboard container model; optional BackButton | single-container keyboard rules |
 | Button | ONE component mirroring the Figma Buttons set — `kind: 'text'` (primary/secondary label), `'icon'` (forward 48 / back 36, SEMANTIC directional icons), `'social'` (google multicolor G / facebook) | discriminated union = Figma Variables; back-on-phone is a product decision (2026-06-11), pending a Figma variant |
-| UnderlineField (+INPUT_TEXT_STYLE) | underline input, iOS-safe metrics | shared metrics with dial prefix |
+| Input (+INPUT_TEXT_STYLE) | the Figma `Input` base (17297:8153): five states Empty/Focused/Filled/Error/Disabled + ExtrasBefore/After slots | field compositions build on it: Forms/PhoneField (built), Forms/FullNameField + Forms/DateOfBirthField (when Name/BirthDate screens land), Forms/CountryDropdown (to be re-composed on Input slots) |
 | PhoneField | LTR digits row: pressable dial box + number | dial press reopens country selector |
 | CountryDropdown (+flags.ts, 48 Figma flag SVGs) | inline type-to-search dropdown, Israel default | per screen-04 annotation |
 | OtpInput | 6 boxes, brand filled state, oneTimeCode autofill | |

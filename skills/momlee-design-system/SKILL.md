@@ -67,3 +67,13 @@ When variant prop-contracts diverge (label vs icon vs provider), use a
 glyphs/assets (e.g. the Google "G") are implementation details, not inventory
 components. Same for brand assets: one `BrandMark` with `variant:
 'wordmark' | 'heart'`, not Logo + Logomark.
+
+## Component hierarchy mirrors Figma EXACTLY (names included)
+
+Figma's structure IS the code structure: base components (e.g. `Input`,
+17297:8153, with State variants Empty/Focused/Filled/Error/Disabled and
+ExtrasBefore/After slots) → field compositions (`Forms/PhoneField`,
+`Forms/FullNameField`, `Forms/DateOfBirthField`, `Forms/CountryDropdown`)
+compose the base. Use **Maor's component NAMES** — don't invent local names
+(real case: the Input base was wrongly named `UnderlineField`; renamed).
+Before building any field, pull its Figma component and its base.
