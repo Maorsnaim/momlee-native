@@ -60,11 +60,12 @@ Before writing a single line of UI code, you MUST pull context from Figma. No ex
 5. **Reuse check** — search the design system / `@momlee/ui` for an existing primitive before building a new one. See `../../design-system/components.md`.
 6. **Build it** — following the three iron rules, RTL-first, with the security/privacy gates wired in.
 
-## Three iron rules
+## Four iron rules
 
 1. **Tokens only.** Zero hardcoded color/spacing/typography/radius/shadow. Typography is Noto Sans Hebrew via the `fontFamily.sans` role token — never a raw family name, file, or size.
 2. **Reuse before create.** A design change happens in one place.
 3. **Annotations = logic.** Implement every state and edge case the annotations describe.
+4. **Never invent.** Anything not found in an official source (Figma, annotations, design-system, knowledge, planning, an explicit instruction) does not exist — STOP, report the gap, ask. A missing component means "blocked until Maor designs it", never a made-up `<CustomX />`. Full protocol: **momlee-prompt-guard**.
 
 ## Derive from Figma vs annotate (do NOT duplicate)
 
@@ -100,6 +101,7 @@ The Figma node already encodes most of the screen. **Read it from the file; neve
 | Recording what you built (purpose, node mapping, tokens/components, decisions) | **momlee-docs** |
 | Finished a meaningful task → log it to the Notion Dev Changelog; leaving a task/update for Maor | **momlee-worklog** |
 | Adding ANY new data collection: table/column, SDK, permission, analytics event | **momlee-data-inventory** |
+| Something is MISSING from Figma/the docs (component, token, rule, copy, name) or you're about to assume | **momlee-prompt-guard** |
 
 ## Working preference
 Per the repo's working rules: **do not execute code changes without explicit user approval** — present a plan/proposal first, then implement on approval. Full conventions: `../../knowledge/conventions.md`.

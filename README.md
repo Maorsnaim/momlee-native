@@ -64,9 +64,10 @@ deliberate human action.
 
 Directories:
 
-- **`skills/`** — 11 skills. The enforcement / trigger layer (incl.
+- **`skills/`** — 12 skills. The enforcement / trigger layer (incl.
   `momlee-worklog` — logs completed work to the Notion Dev Changelog and
-  carries Sivan→Maor tasks).
+  carries Sivan→Maor tasks — and `momlee-prompt-guard` — never invent what
+  isn't in an official source; missing component/token/spec = STOP and ask).
 - **`commands/`** — `momlee-screen`, `momlee-sync-tokens`.
 - **`design-system/`** — live snapshot: `tokens`, `annotations`, `components`,
   `figma`, `CHANGELOG`.

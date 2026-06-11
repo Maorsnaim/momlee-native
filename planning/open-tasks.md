@@ -36,6 +36,16 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## AI Prompt Guard (2026-06-11) — NEW, applies to everything
+
+New skill **momlee-prompt-guard**: if information is not in an official source
+(Figma, annotations, design-system/, knowledge/, planning/, or an explicit
+instruction), it does not exist — STOP and ask; never invent. A missing
+component (e.g. no Time Picker in the design system) means that part is
+**blocked until Maor designs it** — build the rest, log the blocker. This is
+also iron rule #4 in **momlee-figma-first**. No action needed beyond updating
+the plugin — just know the rule is now binding for every Claude session.
+
 ## Architecture Gate (2026-06-11) — NEW, applies to all data wiring
 
 The layered call chain **Screen → Hook → Service → Repository → Supabase** is now
