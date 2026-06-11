@@ -68,7 +68,12 @@ Directories:
   `momlee-worklog` — logs completed work to the Notion Dev Changelog and
   carries Sivan→Maor tasks — and `momlee-prompt-guard` — never invent what
   isn't in an official source; missing component/token/spec = STOP and ask).
-- **`commands/`** — `momlee-screen`, `momlee-sync-tokens`.
+- **`commands/`** — `momlee-screen`, `momlee-sync-tokens`, `momlee-audit`
+  (full compliance audit of the existing codebase against every gate — report
+  only).
+- **`templates/`** — `app-repo-CLAUDE.md`: copy to the app repo root as
+  `CLAUDE.md` so EVERY Claude session in the repo is bound to this plugin
+  (installs it if missing, lists the gates, hard limits).
 - **`design-system/`** — live snapshot: `tokens`, `annotations`, `components`,
   `figma`, `CHANGELOG`.
 - **`knowledge/`** — canonical project facts Maor maintains: `stack`,

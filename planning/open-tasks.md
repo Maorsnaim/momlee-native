@@ -36,6 +36,18 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## Bind every session + retro-audit (2026-06-11) — NEW
+
+Two new pieces close the enforcement loop:
+
+- [ ] **Copy `templates/app-repo-CLAUDE.md` → app repo root as `CLAUDE.md`**
+      (momlee-native branch, commit it). From then on EVERY Claude session in
+      the repo — any model, any machine — reads the contract at session start,
+      checks the plugin is installed, and is bound to the gates.
+- [ ] **Run `/momlee-audit` once** in an app-repo session (after updating the
+      plugin) — full compliance review of everything built so far against all
+      the new gates. Report only; fixes get approved by Maor first.
+
 ## Architecture & Naming Review Obligation (2026-06-11) — NEW skill
 
 New skill **momlee-architecture-review**: during ANY task, existing
