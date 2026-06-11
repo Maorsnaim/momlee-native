@@ -107,3 +107,17 @@ The Figma node already encodes most of the screen. **Read it from the file; neve
 
 ## Working preference
 Per the repo's working rules: **do not execute code changes without explicit user approval** — present a plan/proposal first, then implement on approval. Full conventions: `../../knowledge/conventions.md`.
+
+## The decision ladder — and when to STOP and ask (Maor, explicit, 2026-06-11)
+
+For ANY visual/behavioral decision, the order of truth is:
+1. The screen frame's **INSTANCE properties** (which variant the designer placed)
+2. The **component set** (the variant's canonical styling)
+3. **Annotations** on the frame
+
+If after all three something is still unknown or ambiguous (a variant whose
+meaning isn't clear, a missing state, a product behavior), **STOP and ask Maor
+a focused question. Never ship a plausible guess.** Real cost of guessing:
+social buttons shipped lg/20 when the screen instance was md/16; wide buttons
+shipped 48 when the instance was 44 — every guess = a correction round.
+
