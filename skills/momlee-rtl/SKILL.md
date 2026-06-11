@@ -79,7 +79,7 @@ Related bidi rules (same lesson):
 ## The AppText primitive (mandatory pattern)
 
 RTL is enforced by ONE primitive, not per-screen patches: every user-facing
-text goes through **`AppText`** (`apps/mobile/src/components/AppText.tsx` — fix path if moved), which applies `writingDirection:'rtl'` + **`textAlign:'auto'`** by default with an `align` prop (`right`|`center`|`ltr`). Raw `Text` from react-native is allowed only inside AppText/UnderlineField internals; textAlign utility classNames are forbidden.
+text goes through **`AppText`** (`apps/mobile/src/components/AppText.tsx` — fix path if moved), which applies `writingDirection:'rtl'` + **`textAlign:'auto'`** by default with an `align` prop (`right`|`center`|`ltr`). Raw `Text` from react-native is allowed only inside the `AppText` and `Input` base-component internals (historic note: `Input` was briefly misnamed `UnderlineField`); textAlign utility classNames are forbidden.
 
 **Why `auto` and not `right`:** with native RTL active, React Native treats `textAlign 'left'/'right'` LOGICALLY — `'right'` renders at the **visual left**. `'auto'` follows the layout direction (RTL → visual right). This was verified by pixel measurement on the simulator; don't "fix" it back.
 

@@ -15,6 +15,8 @@ description: Use DURING any MomLee task the moment you notice an existing incons
 During ANY task, if you discover:
 
 - Conflicting naming conventions · multiple names for the same domain entity
+  (NEW names go through the **momlee-naming** gate + `../../knowledge/glossary.md`;
+  this skill covers the debt that already exists)
 - Duplicate concepts (components → run the **Component Reuse Audit**; this skill covers the rest: hooks, services, types, utils)
 - Inconsistent file organization / folder structure
 - Inconsistent component, route, or analytics naming

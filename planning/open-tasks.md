@@ -36,6 +36,26 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## Naming Gate + Glossary + milestone audits (2026-06-11) — NEW
+
+- New skill **momlee-naming**: fires before naming ANYTHING new (file, folder,
+  component, hook, service, route, table, column, enum, analytics event) and
+  before translating Figma layers to code. Glossary terms only, format per
+  artifact kind, printed NAMING check for tables/components/events.
+- New channel **`knowledge/glossary.md`**: the canonical terms (mom, provider,
+  child, meetup, organization, subscription, verification) with the frozen DB
+  mappings and FORBIDDEN synonyms. **No synonyms, ever** — a new entity term
+  enters only by Maor adding it to the glossary.
+- **Figma Layer Naming Guard** (inside momlee-naming): auto-generated layer
+  names (`Frame 12`, `Group`, `Rectangle`, `Component 1`) are never copied to
+  code — resolve via component set → annotation → parent context → glossary,
+  or STOP and ask.
+- **`/momlee-audit` is now MANDATORY before closing any milestone** (sprint /
+  complete flow / release) — see momlee-worklog. Milestone isn't Done until
+  the audit ran and High findings are fixed or explicitly accepted by Maor.
+- Drift cleanup: the stale live reference to `UnderlineField` in momlee-rtl
+  now reads `Input` (historic note only).
+
 ## Bind every session + retro-audit (2026-06-11) — NEW
 
 Two new pieces close the enforcement loop:

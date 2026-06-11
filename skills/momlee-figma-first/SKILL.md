@@ -83,6 +83,7 @@ The Figma node already encodes most of the screen. **Read it from the file; neve
 **Rule:** an annotation is *logic, not inventory*. Name components once in the library; read instances from the tree.
 
 ### Naming conventions
+- **Anything NEW gets named through the momlee-naming gate** — glossary terms only (`../../knowledge/glossary.md`), and NEVER copy auto-generated layer names (`Frame 12`, `Group`, `Rectangle`, `Component 1`) into code.
 - **Screen frames:** `NN_Module/Sub/Screen/State` — e.g. `03_Onboarding/Mom/Phone/Empty`, `08_Onboarding/Mom/Phone/UnsupportedCountryError`.
 - **Components:** `Domain/Component/Platform/Variant/Locale` — e.g. `Forms/CountryDropdown/iOS/Unselected/HE`, `Forms/PhoneField`.
 - Map each component to `@momlee/ui` via **Code Connect** (figma-code-connect) so every instance resolves to real code automatically — then component reuse needs no annotation at all.
@@ -104,6 +105,7 @@ The Figma node already encodes most of the screen. **Read it from the file; neve
 | Finished a meaningful task → log it to the Notion Dev Changelog; leaving a task/update for Maor | **momlee-worklog** |
 | Adding ANY new data collection: table/column, SDK, permission, analytics event | **momlee-data-inventory** |
 | Something is MISSING from Figma/the docs (component, token, rule, copy, name) or you're about to assume | **momlee-prompt-guard** |
+| NAMING anything new (file/component/hook/route/table/column/enum/event); translating a Figma layer name to code | **momlee-naming** |
 | Spotted an EXISTING inconsistency (naming, duplicates, drift, legacy patterns); finishing structural work; asked to review architecture | **momlee-architecture-review** |
 
 ## Working preference

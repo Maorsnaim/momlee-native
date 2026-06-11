@@ -11,6 +11,15 @@ Momlee OS habit (set by Maor): **"log every important dev action/decision in the
 
 After completing a meaningful unit of work: a feature, fix, schema/RLS change, security work, a design-system change, an infra change (build/deploy/tooling), or a decision. Not every tiny edit — one row per meaningful change. If several small edits form one logical change, log them as one row.
 
+## Closing a MILESTONE? /momlee-audit is MANDATORY first
+
+Before logging a **milestone** as Done (a sprint, a complete flow like
+onboarding, a release candidate — not an individual task), running
+**`/momlee-audit`** is mandatory. The milestone is not "Done" until the audit
+ran and its High-priority findings were either fixed (with Maor's approval) or
+explicitly accepted by Maor. Log the audit result in the same Changelog row
+(`Details`: "audit: N findings, M high — link/summary").
+
 ## Where — Notion (primary)
 
 **Momlee OS → Operations → 📝 Dev Changelog**

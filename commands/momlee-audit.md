@@ -5,6 +5,9 @@ argument-hint: "[optional focus: architecture|tokens|rtl|state|analytics|securit
 
 # MomLee Compliance Audit — review everything built so far
 
+> **Mandatory before closing any milestone** (sprint / complete flow /
+> release) — see momlee-worklog. Optional anytime in between.
+
 Audit the existing app codebase (the **momlee-native** branch working tree)
 against ALL momlee-guide rules. `$ARGUMENTS` may narrow the focus; default is
 `all`. **This is a REVIEW: do not fix, rename, or refactor anything** — the
