@@ -46,6 +46,7 @@ momlee/
 ### `packages/core` — `@momlee/core`
 - Pure domain logic: meetup rules (host-defined capacity, min 2, max 100), role permissions (mom/pro), subscription math, provider abstractions (KYC/SMS/billing).
 - Shared **Zod schemas** (meetup, profile, message…) and cross-platform non-DOM hooks.
+- The **analytics wrapper** `@momlee/core/analytics` (`analytics.ts`, `analytics.types.ts`, `providers/posthog.provider.ts`) — the ONLY place an analytics SDK is imported; see `analytics.md`.
 - **No** direct Supabase calls (that's `supabase`'s job), and **no** UI.
 
 ### `packages/features` — `@momlee/features`

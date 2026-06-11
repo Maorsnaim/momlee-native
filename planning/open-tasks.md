@@ -36,16 +36,30 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
-## Analytics Gate (2026-06-11) — NEW, every feature answers 3 questions
+## Analytics: PostHog via wrapper (2026-06-11, Maor's decision) + Analytics Gate
 
-New skill **momlee-analytics** + new channel `knowledge/analytics.md`: every
-feature, at PLAN time, prints an `ANALYTICS GATE` block — which events
-(`object_action`, snake_case, no PII beyond user_id/anon_id), how we verify
-(query the events table, see the rows land), and which success KPI it moves
-(traced to the North Star: WSMA, proxy weekly joins). First-party only stays
-locked. No event spec for a feature = propose + ask Maor, never invent or skip.
-Feature isn't "done" until the events are SEEN landing. No action needed beyond
-updating the plugin.
+**Tool decided: PostHog** (supersedes the first-party-only plan from
+2026-06-10). Everything goes through ONE abstraction —
+`@momlee/core/analytics` (`analytics.track('otp_requested', {...})`) — with
+`providers/posthog.provider.ts` as the only file importing the SDK. **Never
+call PostHog (or any analytics SDK) directly from screens/components.** The
+event taxonomy is STABLE (seed list in `knowledge/analytics.md`); payloads are
+PII-free (`baby_age_range` ✅, `baby_birth_date` ❌).
+
+Also live: skill **momlee-analytics** — every feature prints an
+`ANALYTICS GATE` block at plan time (events / verification / success KPI
+traced to WSMA) and isn't "done" until events are SEEN landing.
+
+- [ ] **Sivan: scaffold the wrapper** — `packages/core/analytics/`
+      (`analytics.ts`, `analytics.types.ts` typed taxonomy,
+      `providers/posthog.provider.ts`), fail-soft without env key; migrate the
+      existing `logEvent` console stub into it (same event names).
+- [ ] **Sivan: add `posthog-react-native`** (now stack-approved — verify Expo
+      Go compatibility on install; if it needs native code, defer the SDK to
+      the EAS dev-client stage and keep the fail-soft console provider until then).
+- [ ] **Maor: provide the PostHog project key + host** (`EXPO_PUBLIC_POSTHOG_KEY`,
+      EU/US cloud choice) and update the privacy policy / store labels to name
+      PostHog as a processor (data-inventory row already updated).
 
 ## Migration Gate (2026-06-11) — NEW, hard gate before any DB change
 
