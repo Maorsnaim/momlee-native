@@ -65,10 +65,15 @@ FULL scale confirmed from the Typography sheet (node 1023:36715, 2026-06-11):
 > Component-level overrides are not scale changes: the Input uses a tighter
 > line-height on iOS (INPUT_TEXT_STYLE, owner-approved deviation).
 
-## ⚠️ Gaps found in Figma (for Maor to fix in the file)
+## ⚠️ Gaps found in Figma (for Maor to fix in the file) — consolidated audit 2026-06-11
+
+**Off-scale raw values inside the DS component sets themselves:**
+- `Buttons/Button` (all hierarchies): padding `14px/10px` — neither 10 nor 14 exists in the spacing scale (…8, 12, 16…).
+- `Buttons/Social button`: raw `gap: 10px` between label and logo.
+
+**Per-screen issues:**
 
 - **Stray font:** the phone error text uses `Brown LL Heb: Medium` instead of Noto Sans Hebrew (Phone/UnsupportedCountryError screen).
-- **Untokenized literals (new):** Buttons/Social button uses a raw `gap: 10px` between label and logo; the welcome screen's Facebook instance renders a SOLID BLUE square that contradicts the component set (white shell + blue logo) — confirm which is canonical.
 - **Untokenized literals:** CTA padding `14px`; gaps `10px`/`4px`/`6px`; option-circle padding `10px`; boy-option border `#739fd2` (no token, unlike the girl `utility-brand-500`); `text-black` on option labels; screen 08 background is literal `white` vs `bg-primary` elsewhere; Skip button has raw `14px/20px` instead of text-sm tokens.
 - All scales are now CONFIRMED from the documentation sheets — nothing provisional remains.
 

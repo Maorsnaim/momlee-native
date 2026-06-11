@@ -49,5 +49,5 @@ Libs: i18n (typed t, directionFor), icons (FORWARD/BACKWARD), phone (R1-R4), cou
 Code folders now mirror the design system: `base/` (AppText, Button, Input, Icon, BrandMark, ProgressBar) · `app/forms/` (PhoneField, CountryDropdown, OtpInput, flags) · `app/templates/` (OnboardingPageTemplate; future templates side-by-side) · `app/` (LegalText). New: **Icon** (Figma Icons library, semantic forward/backward) and **ProgressBar** (Figma 1085:57382, Label=False) — ready for the Name screen's top-nav.
 
 ### Social buttons (2026-06-11)
-`Button kind='social'` mirrors `Buttons/Social button`: Size md(40)/lg(44), Supporting text (label-in-button), Theme=Color implemented (one white shell + official provider mark; Brand/Gray pending logo assets); providers google/facebook (apple/twitter pending — note: **Sign in with Apple is REQUIRED by App Store review** once Google/FB login ship).
+`Button kind='social'` mirrors `Buttons/Social button`: Size md(40)/lg(44), Supporting text (label-in-button), Theme=Color implemented (one white shell + official provider mark; Brand/Gray pending logo assets); providers google/facebook/apple (twitter pending — note: **Sign in with Apple is REQUIRED by App Store review** once Google/FB login ship).
 
