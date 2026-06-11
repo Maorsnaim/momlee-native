@@ -47,12 +47,14 @@ momlee/
 - Pure domain logic: meetup rules (host-defined capacity, min 2, max 100), role permissions (mom/pro), subscription math, provider abstractions (KYC/SMS/billing).
 - Shared **Zod schemas** (meetup, profile, message…) and cross-platform non-DOM hooks.
 - The **analytics wrapper** `@momlee/core/analytics` (`analytics.ts`, `analytics.types.ts`, `providers/posthog.provider.ts`) — the ONLY place an analytics SDK is imported; see `analytics.md`.
+- The **permissions wrapper** `@momlee/core/permissions` (same pattern) — the ONLY place Expo permission APIs are called (location, notifications, camera, photo library, contacts); screens never request permissions directly. Rules: momlee-privacy → "Device Permission Gate".
 - **No** direct Supabase calls (that's `supabase`'s job), and **no** UI.
 
 ### `packages/features` — `@momlee/features`
 - Self-contained **feature modules**, each composing `ui` + `core` + `supabase`: `meetups`, `chat`, `profile`, `discovery`, `onboarding`, `verification`, `pro-dashboard`, `subscription`, `notifications`.
 - Each module is role-aware (exposes mom-facing and/or pro-facing surfaces). See `modules-roles.md`.
 - Apps compose these modules into routes; they don't reimplement feature logic.
+- **Module boundaries are law** — see "Module Boundaries" below.
 
 ### `packages/supabase` — `@momlee/supabase`
 - Client init (native auth/storage variants).
@@ -160,6 +162,51 @@ migrate later. Until a feature-module package exists, keep the same four files
 per feature inside the app (e.g. `src/features/<module>/use-x.ts`,
 `src/features/<module>/x-service.ts`) with the repository in the shared
 Supabase layer — never collapse layers "until we have packages".
+
+## Module Boundaries — features never reach into each other (Maor, 2026-06-11)
+
+A feature module exposes a **public service interface**; everything else in it
+is private. Cross-module access goes ONLY through that interface — never
+another module's screens, hooks, internal services, repositories, or tables.
+
+```
+onboarding  ↛ meetups          (directly)
+meetups     ↛ subscriptions    (directly)
+providers   ↛ moms             (directly)
+any module  →  another module's PUBLIC service — the only door
+```
+
+- Need meetup data inside onboarding? Call the **meetups service's exported
+  API** — don't import its repository or query its tables.
+- A module's repository is **private to that module**. One domain, one owner.
+- Shared truths (types, Zod schemas, domain rules) live in `@momlee/core` —
+  that's the legitimate shared layer, not a tunnel between modules.
+- **Why:** this is what prevents feature-spaghetti — six months in, a change
+  to subscriptions shouldn't be able to break onboarding.
+- **Enforcement:** extend the eslint boundary rules (`import/no-restricted-paths`)
+  so `features/<a>/**` may import from `features/<b>/index` (the public
+  surface) but never `features/<b>/internal paths`.
+
+## Feature Flags — release slow, kill fast, delete nothing (Maor, 2026-06-11)
+
+Every **large or sensitive** feature ships behind a flag:
+
+```
+provider_subscriptions_enabled
+mom_discovery_enabled
+identity_verification_enabled
+```
+
+- Naming: `<feature>_enabled`, `snake_case` (glossary terms).
+- Flags are defined **centrally** (one flags module in `@momlee/config` /
+  `@momlee/core`) — never inline booleans scattered in screens.
+- Sensitive features default **OFF**; turning one on is a deliberate act.
+- Flag state may sit in the approved Zustand store (feature flags are on the
+  allowed list), but the **source should be server-controllable** so a bad
+  feature can be killed remotely without a store release — mechanism (e.g. a
+  Supabase config row) is Maor's call, tracked in open-tasks.
+- **Disabling a feature = flipping its flag. Code is NEVER deleted to turn a
+  feature off.**
 
 ### Machine enforcement (required, not optional)
 

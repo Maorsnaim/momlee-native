@@ -99,7 +99,8 @@ The Figma node already encodes most of the screen. **Read it from the file; neve
 | Wiring data/actions, auth, roles, validation, RLS, secrets, webhooks | **momlee-security** |
 | ANY database change: table/column, RLS policy, enum, view, bucket (Migration Gate) | **momlee-migration** |
 | Planning or finishing ANY feature: which events, how we verify, what KPI (Analytics Gate) | **momlee-analytics** |
-| Handling KYC, location, PII, children's data, block/report, audit logging | **momlee-privacy** |
+| Handling KYC, location, PII, children's data, block/report, audit logging; ANY device permission, upload, or deletion/retention question | **momlee-privacy** |
+| Data screens, async/critical actions (OTP, meetup, message, upload, location), error copy, loading/empty/error states, offline behavior | **momlee-resilience** |
 | Preparing an App Store / Play submission | **momlee-store-release** |
 | Recording what you built (purpose, node mapping, tokens/components, decisions) | **momlee-docs** |
 | Finished a meaningful task → log it to the Notion Dev Changelog; leaving a task/update for Maor | **momlee-worklog** |

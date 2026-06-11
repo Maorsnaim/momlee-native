@@ -53,7 +53,7 @@ design system.
 | Missing component | A made-up component, placeholder, or community stand-in |
 | Missing token | A "close enough" hex/px value (also banned by **momlee-design-system**) |
 | Unspecified state/validation/edge case | Behavior you find "logical" — annotations are the spec |
-| Missing copy / microtext | Text you wrote yourself (he or en) |
+| Missing copy / microtext | Text you wrote yourself (he or en) — check `../../knowledge/copy-guidelines.md`, then ask |
 | Unknown table/column name | A guessed DB name — use `../../knowledge/data-model.md` only |
 | Unspecified flow ("what happens after the CTA?") | An invented navigation target |
 

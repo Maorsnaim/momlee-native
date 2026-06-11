@@ -39,6 +39,7 @@ Also never `marginLeft` / `paddingRight` etc. in style objects.
 ## Zero hardcoded strings
 
 - Every user-facing string via `t('namespace.key')` from `@momlee/i18n`. **he** is the default and source of truth. No literal Hebrew (or English) text in components.
+- The TEXT itself is never invented — Figma word-for-word, then `../../knowledge/copy-guidelines.md` (feminine second person, warm, specific), then ask Maor.
 - Numbers, dates, and currency via `Intl` (₪, he-IL) — never manual formatting.
 
 ## Icons & content

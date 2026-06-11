@@ -13,7 +13,7 @@ description: Use whenever you wire data or actions into MomLee — auth, roles, 
 2. **Never `service_role` on the client.** Client uses the `anon` key only; service_role is server-side, least-privilege.
 3. **Server-side validation (Zod)** on every API/edge function before acting. Client validation is UX only.
 4. **Authorization on every action** — authenticated ≠ authorized. Check the user is actually allowed (e.g. `meetup.host_id === user.id`).
-5. **RLS default-deny** on every table, opened explicitly. RLS is the last line of defense; UI hiding is not security.
+5. **RLS default-deny** on every table, opened explicitly. **Authorization ≠ UI visibility: hiding a button is NOT a permission.** Even when the screen is hidden, the DB/RLS/service MUST enforce — an unapproved provider cannot create services no matter what the UI shows. Every UI-gated capability has a matching server-side check, always.
 6. **Never trust a client-sent `role`/status.** Roles and statuses are server-only; `role` columns are never writable from client input.
 7. **Subscriptions only via verified Stripe / store-IAP webhooks** — verify the signature. The client never sets subscription status.
 8. **No `__DEV__` auth bypass shipping to prod.** Use an explicit `NODE_ENV === "production"` guard; leave no bypasses.

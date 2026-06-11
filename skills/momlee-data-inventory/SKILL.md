@@ -46,9 +46,13 @@ to identity? · tracking? (must be **No**) · shared with · retention/deletion.
    references, never the raw sensitive artifacts.
 5. **Children-related data is the most sensitive thing we hold.** Any new use
    of it gets a row here AND a check against `../../knowledge/privacy.md`.
-6. **Deletable by design.** Every collected data point must be erasable by the
-   mandatory account-deletion flow. If you add data, ask: "does deletion cover
-   this?" If not, fix that in the same change.
+6. **Retention/deletion behavior is part of the model — no data without an
+   exit plan.** Every new table/column/bucket declares AT CREATION TIME what
+   happens on account deletion (cascade / anonymize / retain-with-legal-basis)
+   and its retention window — it's a mandatory field in the Migration Gate.
+   **Default to SOFT delete** (flag + hide + purge window); hard delete only
+   with Maor's approval. If you add data, ask: "does deletion cover this?" —
+   if not, fix it in the same change. A TBD retention row blocks the feature.
 7. **New SDK = privacy review.** Before adding any SDK, check what it collects
    (its privacy manifest / docs), add its rows to the inventory, and confirm it
    doesn't violate rules 1-2. Apple now requires third-party SDK privacy

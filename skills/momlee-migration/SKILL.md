@@ -20,9 +20,12 @@ MIGRATION GATE: <short name>
 - Affected tables:  <exact DB names per ../../knowledge/data-model.md>
 - Affected APIs:    <@momlee/supabase repositories/queries, RPCs, views, Edge Functions,
                      realtime subscriptions, storage policies that read these tables>
+- Retention:        <what happens to this data on account deletion (cascade /
+                     anonymize / retain-with-basis); soft-delete + purge window —
+                     no new data without an exit plan (momlee-privacy)>
 ```
 
-All five fields are mandatory. "RLS impact: none" must be argued (why none?),
+All six fields are mandatory. "RLS impact: none" must be argued (why none?),
 not asserted. No gate block = the change is invalid, even if the SQL is correct.
 
 ## Pre-flight (before writing the migration)

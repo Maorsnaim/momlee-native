@@ -36,6 +36,51 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## Ten resilience & boundary gates (2026-06-11, Maor) — NEW
+
+A second wave of gates is live (plugin 0.13.0):
+
+1. **Module Boundaries** — onboarding ↛ meetups ↛ subscriptions ↛ moms
+   directly; cross-module = the other module's PUBLIC service only
+   (architecture.md + momlee-react-native).
+2. **Error Handling Standard** — every error: specific Hebrew user message +
+   dev log (no PII) + taxonomy analytics event when relevant + recovery
+   action. Never "Something went wrong" (new skill **momlee-resilience**).
+3. **Four states** — Loading/Empty/Error/Success on every data screen, via the
+   shared pattern; missing Empty/Error designs in Figma = blocked part.
+4. **Device Permission Gate** — location/notifications/camera/photos/contacts
+   ONLY via the `@momlee/core/permissions` wrapper; in-context requests;
+   denial is a designed state (momlee-privacy).
+5. **Feature Flags** — every large/sensitive feature behind `<feature>_enabled`
+   (provider_subscriptions_enabled, mom_discovery_enabled,
+   identity_verification_enabled); kill = flip flag, never delete code.
+6. **Copy source of truth** — new channel `knowledge/copy-guidelines.md`
+   (feminine second person, warm+specific, Figma word-for-word, sensitive
+   areas need Maor); no invented user-facing text, ever.
+7. **Authorization ≠ UI visibility** — hiding a button is not a permission;
+   DB/RLS/service enforce even when the screen is hidden (momlee-security #5).
+8. **Offline/Network failure** — OTP, meetup, message, upload, location all
+   define failure behavior; input never lost; no auto-retry on writes;
+   airplane-mode test before done (momlee-resilience).
+9. **Upload Gate** — every upload declares size limit, type allowlist, privacy
+   class, bucket, access policy, delete policy (+ EXIF/GPS stripping)
+   (momlee-privacy).
+10. **Deletion/Retention** — no new data model without retention/deletion
+    behavior; SOFT delete by default; new mandatory Retention field in the
+    Migration Gate (momlee-privacy + momlee-data-inventory + momlee-migration).
+
+Pending decisions/tasks:
+
+- [ ] **Maor: feature-flags kill-switch mechanism** (server-controllable —
+      e.g. a Supabase config row vs build-time only).
+- [ ] **Maor: account-deletion cascade map** — decide per data type (photos,
+      messages, children records, meetups, verification refs): cascade /
+      anonymize / retain — fill the retention column in data-inventory.md.
+- [ ] **Maor: Figma designs for shared Empty/Error states** (the four-states
+      pattern needs designed visuals before the shared component is built).
+- [ ] **Sivan: scaffold `@momlee/core/permissions`** (wrapper like analytics)
+      when the first permission feature lands.
+
 ## Naming Gate + Glossary + milestone audits (2026-06-11) — NEW
 
 - New skill **momlee-naming**: fires before naming ANYTHING new (file, folder,

@@ -53,6 +53,27 @@ lint config: `../../knowledge/architecture.md` → "The layered call chain".
 
 - **No business logic in components.** A component does one job; if a file grows too large it does too much — split it. Explicit prop types, variants over magic booleans.
 
+## Module Boundaries — features never reach into each other (HARD STOP)
+
+`onboarding ↛ meetups`, `meetups ↛ subscriptions`, `providers ↛ moms` —
+**directly, never.** A module needing another module's data/behavior goes
+through that module's **public service interface only** — never its screens,
+internal hooks, repositories, or tables. A module's repository is private to
+it. Shared truths live in `@momlee/core`, which is the legitimate shared
+layer — not a tunnel between modules. Full matrix + eslint boundary
+enforcement: `../../knowledge/architecture.md` → "Module Boundaries".
+
+## Feature Flags — release slow, kill fast, delete nothing
+
+Every **large or sensitive** feature ships behind a flag
+(`provider_subscriptions_enabled`, `mom_discovery_enabled`,
+`identity_verification_enabled` — `<feature>_enabled`, snake_case), defined
+**centrally**, sensitive defaults OFF. Disabling a feature = flipping its
+flag; **code is never deleted to turn something off**. Flags belong to the
+approved Zustand list; the kill-switch source should be server-controllable
+(mechanism = Maor's call). Full rules: `../../knowledge/architecture.md` →
+"Feature Flags".
+
 ## State Management Guard — every state has ONE home
 
 Ask first: **"who owns this data?"** Then place it — and never anywhere else:
