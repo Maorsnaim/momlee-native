@@ -7,6 +7,20 @@ description: Use AFTER completing any meaningful MomLee dev task — feature, fi
 
 Momlee OS habit (set by Maor): **"log every important dev action/decision in the Dev Changelog as it happens."** This skill makes Claude do it automatically — for both Maor and Sivan.
 
+## Mechanical enforcement (harness-level, not memory-level)
+
+The plugin ships hooks (`../../hooks/hooks.json` + `worklog-hook.js`) that the
+Claude Code harness executes regardless of what the model remembers:
+
+- a `git commit` in any MomLee repo marks the session **worklog-pending**;
+- logging a row via the Notion MCP clears the mark;
+- trying to END THE TURN while pending **blocks once** with an instruction to
+  log now (or use the `from-sivan.md` fallback, or state explicitly that the
+  commits were trivial).
+
+"As it happens" means as it happens — don't wait for the gate to catch you;
+the gate is the net, not the habit.
+
 ## When to log
 
 After completing a meaningful unit of work: a feature, fix, schema/RLS change, security work, a design-system change, an infra change (build/deploy/tooling), or a decision. Not every tiny edit — one row per meaningful change. If several small edits form one logical change, log them as one row.

@@ -36,6 +36,18 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## Worklog is now MECHANICALLY enforced (2026-06-11) — hooks in the plugin
+
+The plugin now ships Claude Code **hooks** (`hooks/hooks.json`, Node script):
+commit in a MomLee repo → session marked worklog-pending → ending the turn is
+blocked once until a Dev-Changelog row is logged (or the git fallback /
+explicit "trivial" note). This is harness-level enforcement — independent of
+the model's memory.
+
+- [ ] **Sivan: after the next `/plugin install momlee-guide@momlee`, restart
+      the session** so the hooks load (Claude Code asks to approve plugin
+      hooks on install — approve). Node is required (already in your env).
+
 ## Ten resilience & boundary gates (2026-06-11, Maor) — NEW
 
 A second wave of gates is live (plugin 0.13.0):

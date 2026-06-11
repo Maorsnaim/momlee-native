@@ -74,6 +74,11 @@ Directories:
 - **`templates/`** — `app-repo-CLAUDE.md`: copy to the app repo root as
   `CLAUDE.md` so EVERY Claude session in the repo is bound to this plugin
   (installs it if missing, lists the gates, hard limits).
+- **`hooks/`** — harness-executed enforcement (loads with the plugin; requires
+  Node): a `git commit` in a MomLee repo marks the session worklog-pending; a
+  Notion Dev-Changelog write clears it; ending the turn while pending is
+  blocked once with an instruction to log. Mechanical — works regardless of
+  what the model remembers.
 - **`design-system/`** — live snapshot: `tokens`, `annotations`, `components`,
   `figma`, `CHANGELOG`.
 - **`knowledge/`** — canonical project facts Maor maintains: `stack`,
