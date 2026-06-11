@@ -165,19 +165,38 @@ Supabase layer — never collapse layers "until we have packages".
 ## Access from code
 Remote/server state goes **through `@momlee/supabase` only** (queries/mutations/RPC + generated types), reached via the chain above. No SQL or direct Supabase calls from `apps/*`.
 
-## Mobile component taxonomy (mirrors the Figma design system)
+## Monorepo architecture (Maor's decision, 2026-06-11) — cross-platform design system
 
 ```
-apps/mobile/src/components/
-├── base/        # ❖ Base Components (Figma base sets): AppText, Button, Input,
-│                #   Icon, BrandMark, ProgressBar
-├── app/
-│   ├── forms/   # Forms/* compositions: PhoneField, CountryDropdown, OtpInput, flags
-│   ├── templates/  # one file per Figma template: OnboardingPageTemplate
-│   │               # (post-onboarding flows get their OWN template files here)
-│   └── LegalText.tsx  # app-specific blocks
+apps/
+  mobile/
+    src/app/        # screens (expo-router)
+    src/shells/     # page templates: OnboardingPageTemplate (future templates side-by-side)
+    src/lib/        # app glue ONLY: analytics, auth, supabase, anon, rtl
+packages/
+  tokens/   # ❖ Variables (@momlee/tokens) — synced from Figma
+  ui/       # THE design system (@momlee/ui) — import { Button } from '@momlee/ui'
+    src/primitives/  # AppText, Button, Input, Icon, ProgressBar
+    src/forms/       # Forms/*: PhoneField, CountryDropdown, OtpInput, flags
+    src/brand/       # BrandMark
+    assets/          # icons/ flags/ brand/ (SVGs from Figma)
+  core/     # platform-agnostic logic (@momlee/core): i18n, countries, validation — NO react imports
 ```
-Variables live in `packages/tokens` (@momlee/tokens). Figma names = file/component names.
+
+Rules:
+- **Folder-per-component** (`Button/Button.tsx + index.ts`) — when Web returns, add
+  `Button.web.tsx` beside it and nothing moves. The split to `.native.tsx` happens then.
+- ui's RN entry is `src/index.native.ts`; the legacy `src/index.ts` (cn/old web tokens)
+  keeps serving the shelved Next app until web is rebuilt on this design system.
+- A component earns a place in @momlee/ui only if it's part of the design system —
+  screen-specific copy blocks (e.g. legal paragraphs) are INLINE in the screen.
+- Figma names = component/file names.
+
+Monorepo gotchas (cost us real debugging):
+- **Expo Metro consumes tsconfig `paths`** — never alias runtime modules (e.g. 'react')
+  to type-only locations; pin divergent @types via package-local devDependencies instead.
+- After workspace dep changes, if Metro can't resolve core modules: full clean reinstall
+  (`rm -rf node_modules apps/*/node_modules packages/*/node_modules && pnpm install`).
 
 **Icons policy:** icons come ONLY from the Figma Icons library (node 3463:407484),
 downloaded as currentColor SVGs into `assets/icons/` and exposed via `base/Icon`

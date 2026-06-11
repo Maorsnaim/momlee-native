@@ -57,13 +57,13 @@ Before writing a single line of UI code, you MUST pull context from Figma. No ex
 2. **Pull design context** — `get_design_context` (+ `get_metadata`, screenshot) on the node. Understand structure, layout, hierarchy, states.
 3. **Map values → tokens** — read the variables from the design context; map every value to the token system. NEVER copy a raw hex/px into code. Missing token → add it in Figma first, then mirror in `../../design-system/tokens.md`.
 4. **Read annotations** — they are the spec (states, visibility, validations, role permissions, edge cases). Code that contradicts an annotation is a bug. See `../../design-system/annotations.md`.
-5. **Reuse check** — search the design system / `@momlee/ui` for an existing primitive before building a new one. See `../../design-system/components.md`.
+5. **Component Reuse Audit** — before building ANY new component, run the mandatory audit from **momlee-design-system**: search `../../design-system/components.md`, the Figma component inventory, and the code (name + synonyms), and print the `REUSE AUDIT` proof block with a REUSE / EXTEND / CREATE verdict. No audit block = no new component.
 6. **Build it** — following the three iron rules, RTL-first, with the security/privacy gates wired in.
 
 ## Four iron rules
 
 1. **Tokens only.** Zero hardcoded color/spacing/typography/radius/shadow. Typography is Noto Sans Hebrew via the `fontFamily.sans` role token — never a raw family name, file, or size.
-2. **Reuse before create.** A design change happens in one place.
+2. **Reuse before create — proven, not assumed.** Before ANY new component, run the **Component Reuse Audit** and print its proof block (search `components.md` + the Figma inventory + the code, by name AND synonyms; verdict REUSE → EXTEND → CREATE). See **momlee-design-system**. A design change happens in one place.
 3. **Annotations = logic.** Implement every state and edge case the annotations describe.
 4. **Never invent.** Anything not found in an official source (Figma, annotations, design-system, knowledge, planning, an explicit instruction) does not exist — STOP, report the gap, ask. A missing component means "blocked until Maor designs it", never a made-up `<CustomX />`. Full protocol: **momlee-prompt-guard**.
 

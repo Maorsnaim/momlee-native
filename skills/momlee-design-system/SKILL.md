@@ -1,6 +1,6 @@
 ---
 name: momlee-design-system
-description: Use whenever you style ANY MomLee UI — choosing or applying colors, spacing, typography, radius, or shadows; reading design tokens; deciding whether to build a new component; or when a token is missing. Enforces tokens-only (zero hardcoded values), Noto Sans Hebrew via the fontFamily.sans role token, reuse-before-create, annotations-as-logic, and the token update flow between Maor's Figma snapshot and Sivan's build. Trigger on any color/spacing/typography/radius/shadow decision in MomLee code.
+description: Use whenever you style ANY MomLee UI — choosing or applying colors, spacing, typography, radius, or shadows; reading design tokens; when a token is missing; and BEFORE creating any component (Button, Input, Card, Avatar, Badge, Sheet, or anything else). Enforces tokens-only (zero hardcoded values), Noto Sans Hebrew via the fontFamily.sans role token, the mandatory Component Reuse Audit (prove you searched components.md + Figma inventory + code before creating), annotations-as-logic, and the token update flow between Maor's Figma snapshot and Sivan's build. Trigger on any color/spacing/typography/radius/shadow decision or any new-component moment in MomLee code.
 ---
 
 # MomLee Design System — tokens-only
@@ -19,9 +19,32 @@ The design system is the law for every visual value. Figma is the runtime source
 - Reference the family **only through the `fontFamily.sans` role token**. NEVER a raw family name, a font file path, or a raw size/weight.
 - Sizes and line-heights are tokens too (e.g. `text-md` = 16/24), never hardcoded numbers.
 
-## Reuse before create
+## Component Reuse Audit — PROVE the search before creating (hard gate)
 
-**One Figma component = one code component** in the shared `@momlee/ui` layer. Reuse before create; a design change happens in one place and propagates. Never fork a component to tweak it locally. Check `../../design-system/components.md` before building any new primitive.
+**One Figma component = one code component.** Never fork a component to tweak it locally. But "reuse before create" is not a vibe — it is an **audit you must run and SHOW** before creating ANY new component. A new component without the audit block is invalid, full stop.
+
+**The three searches (all mandatory, in order):**
+1. **`../../design-system/components.md`** — both tables (observed + built in code).
+2. **The Figma component inventory** — component sets in the design file (the node map in `../../design-system/figma.md`; `get_metadata` / design context on the libraries).
+3. **The codebase** — grep `@momlee/ui` and `apps/*/src/components/` for the name AND its synonyms.
+
+**Search by function, not just name.** Before a "BottomSheet" search Sheet/Modal/Drawer/Popup; before a "Badge" search Chip/Tag/Pill; before an "Input" search Field/TextField; before a "Card" search Tile/ListItem; before an "Avatar" search ProfileImage. A duplicate under a different name is still a duplicate.
+
+**Print this block in your response before writing the component:**
+
+```
+REUSE AUDIT: <ComponentName>
+- components.md: searched <terms> -> <hit / no hit>
+- Figma inventory: <where looked> -> <hit / no hit>
+- Code (@momlee/ui + apps): grep <terms> -> <hit / no hit>
+Verdict: REUSE <X> | EXTEND <X> (new variant/prop) | CREATE (no match anywhere)
+```
+
+**Verdict order is binding:** REUSE as-is → EXTEND the existing component with a variant/prop (per the Variants ↔ props rule below) → only if neither is possible, CREATE. Creating when EXTEND was possible is a bug.
+
+**Base primitives are presumed to EXIST** — `Button`, `Input`, `Card`, `Avatar`, `Badge`, `Sheet` (wrapping `@gorhom/bottom-sheet`), `AppText`, `Icon`, `BrandMark`. A second one of these is almost always a duplicate; treat "I need a slightly different Button" as EXTEND, never CREATE.
+
+**If the verdict is CREATE:** the component must exist in Figma first with Maor's name (**momlee-prompt-guard** — a component not in Figma is blocked, not invented), and the same change registers it in `components.md` (**momlee-docs**).
 
 ## Annotations are logic
 

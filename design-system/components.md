@@ -8,6 +8,11 @@
 before create. A design change happens in **one place** — the shared component —
 and propagates everywhere it is used. Never fork a component to tweak it locally.
 
+This registry is the **first stop of the mandatory Component Reuse Audit**
+(see `../skills/momlee-design-system/SKILL.md`): before creating any component,
+search BOTH tables below, then the Figma inventory, then the code — and show
+the audit. Every CREATE verdict must add its row here in the same change.
+
 ## Observed components (seed)
 
 From the Mom onboarding Figma. **All are "planned" — not built yet.**

@@ -40,8 +40,13 @@ Track progress with a **TodoWrite item per step** below.
    visibility rule, validation, role permission (mom-or-pro), and edge case they
    describe. Code that contradicts an annotation is a bug.
 
-6. **Reuse check.** Search `design-system/components.md` (and `@momlee/ui`) for an
-   existing component/primitive before creating anything new. Reuse before create.
+6. **Component Reuse Audit.** Before creating ANY new component, run the
+   mandatory audit per **momlee-design-system**: search `design-system/components.md`
+   (both tables), the Figma component inventory, and the code (`@momlee/ui` +
+   `apps/*/src/components/`) — by name AND synonyms (Sheet/Modal/Drawer,
+   Badge/Chip/Tag…). Print the `REUSE AUDIT` proof block with a verdict:
+   REUSE → EXTEND (variant/prop) → CREATE only if no match anywhere. No audit
+   block = no new component.
 
 7. **Build it** with Expo / React Native / NativeWind per **momlee-react-native**,
    **RTL-first** per **momlee-rtl** — logical properties only (no `left`/`right`),

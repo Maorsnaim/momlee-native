@@ -16,4 +16,5 @@
 - Buttons/Button full API adopted in code: Hierarchy (incl. tertiary + link-color #6a393c text-brand-secondary-(700) + link-gray), Size xs-xl, Loading state.
 - New tokens: text-brand-secondary-(700), input/disabled pair (#d4d4d4); Input base renamed/aligned to the Figma component (5 states + slots).
 - Complete Variables sync: FULL spacing (none-11xl) + radius (none-4xl, sm fixed 4→6) scales from the documentation sheets; icons now from the Figma Icons library via base/Icon (Ionicons stand-ins removed); ProgressBar built; component folders reorganized to base/ + app/forms/ + app/templates/ per the design-system taxonomy.
+- Monorepo restructure: design system moved to packages/ui (primitives/forms/brand, folder-per-component, ready for .web variants), business logic to packages/core (i18n/countries/validation), templates to apps/mobile/src/shells. Import surface: `import { Button } from '@momlee/ui'`. LegalText dissolved (inlined — not a DS component).
 
