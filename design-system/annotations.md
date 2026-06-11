@@ -140,3 +140,16 @@ reopen the selector). Validation, when enabled, follows the SELECTED
 country's format via libphonenumber-js (never IL-hardcoded). Enforced by
 screen tests in `apps/mobile/src/app/__tests__/phone.test.tsx`.
 
+## OTP screen — behavior decisions (Maor, 2026-06-12)
+
+1. **Autofocus**: the screen opens with the keyboard up and the first
+   (leftmost) cell already active — no extra tap.
+2. **Active cell = Filled styling** (not the set's ringed Focused) — Maor's
+   visual call for this screen; MegaInputField keeps the Focused variant.
+3. **Auto-fill & auto-advance**: the moment the 6-digit code completes —
+   typed OR SMS-autofilled (`textContentType="oneTimeCode"` iOS QuickType,
+   `autoComplete="sms-otp"` Android) — verification runs and the user
+   advances automatically. Zero taps after the SMS arrives (iOS QuickType
+   requires its one suggestion tap — an OS limit). Verify end-to-end when
+   Twilio Verify + Supabase Phone Auth go live.
+
