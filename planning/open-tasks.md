@@ -40,10 +40,11 @@ env tokens) so it's correct the moment the deployment lands.
 
 Two new pieces close the enforcement loop:
 
-- [ ] **Copy `templates/app-repo-CLAUDE.md` → app repo root as `CLAUDE.md`**
-      (momlee-native branch, commit it). From then on EVERY Claude session in
-      the repo — any model, any machine — reads the contract at session start,
-      checks the plugin is installed, and is bound to the gates.
+- [x] **DONE (2026-06-11, commit `d60a34f` on momlee-native):** the session
+      contract was MERGED into the app repo's existing `CLAUDE.md` as a
+      "READ FIRST" section (the web-era guide below it was kept; the plugin
+      wins on conflicts). Awaiting push by Maor. Every Claude session in the
+      repo now reads the contract at session start.
 - [ ] **Run `/momlee-audit` once** in an app-repo session (after updating the
       plugin) — full compliance review of everything built so far against all
       the new gates. Report only; fixes get approved by Maor first.
