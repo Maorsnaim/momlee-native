@@ -25,6 +25,7 @@
 | **Maps** | **Mapbox** | Meetup discovery by distance, location picking, map display. Native: `@rnmapbox/maps`. Keys in env. Distance/geo computed server-side (Postgres), not in the client. |
 | **Email** | **Resend** | Transactional (welcome, meetup confirmation, subscription notices) via edge function. Templates RTL (`dir="rtl"`). |
 | **Push** | **Expo Push Notifications** | Meetup join, new message, meetup reminder. Push tokens stored on the profile; send via edge function. |
+| **Analytics** | **PostHog** via `@momlee/core/analytics` | Decided 2026-06-11. Screens/components NEVER import an analytics SDK — only the wrapper (provider-pluggable: `providers/posthog.provider.ts`). Stable event taxonomy + PII rules: `analytics.md`. Product analytics only — no tracking, no ATT. |
 | **Identity / KYC** | _Open decision:_ **Persona** (leading) / **Stripe Identity** | ID + selfie verification for all users. Behind a `verificationProvider` abstraction in `@momlee/core`. Store the result only — never raw documents. See `privacy.md`. |
 | **Payments** | **Stripe** Atlas (incorporation) + Stripe Payments/Billing | Pro subscription (trial month → monthly). |
 | **Payments (stores)** | Apple IAP / Google IAP | "As required" — store rules may force IAP for digital content. Evaluated before store release; plan a `billingProvider` abstraction. |

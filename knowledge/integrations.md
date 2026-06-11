@@ -24,16 +24,30 @@ ID / selfie verification for all users (moms + Pros). Two candidates:
 - **Decision pending.** Implemented behind a `verificationProvider` abstraction in `@momlee/core`, so swapping providers = swapping one implementation.
 - Store the verification **result only** (status + provider reference) — never raw ID documents or selfies. See `privacy.md`.
 
-## Analytics & Crash reporting — DECIDED 2026-06-10
+## Analytics & Crash reporting — UPDATED 2026-06-11
 
-- **Analytics: first-party only.** Product events (e.g. `onboarding_step_viewed`, `otp_requested`) are written to our own Supabase events table — **no third-party analytics SDK**, nothing leaves our infrastructure, no tracking, no ATT. Event names/payloads are documented per screen in the Figma annotations; payloads must not contain PII beyond the user id.
+- **Analytics: PostHog** (Maor's decision 2026-06-11; supersedes the
+  first-party-only decision of 2026-06-10) — accessed **ONLY through the
+  internal wrapper `@momlee/core/analytics`** (provider-pluggable). No screen,
+  component, hook, or service outside the wrapper ever imports an analytics
+  SDK. **Product analytics only:** no cross-app tracking, no ad identifiers,
+  no ATT. Payloads stay PII-free (coarse buckets, never raw values — full
+  rules + the stable event taxonomy: `analytics.md`).
+- **The taxonomy outlives the tool.** Event names and properties are the
+  durable contract — swapping PostHog for another provider must require a new
+  `providers/*.provider.ts` file and nothing else.
 - **Crash reporting: Sentry — but NOT installed yet.** The Sentry SDK needs native code, which would break the Expo Go test path (see `dev-environment.md`). Install it **at the EAS dev-client stage**, not before. Until then: Expo error overlay in dev; EAS build logs.
 - Both decisions are reflected in `data-inventory.md` (Usage Data / Diagnostics rows). Changing either = Maor's decision + a data-inventory update first.
 
-## Onboarding funnel analytics (first-party) — planned schema
+## Onboarding funnel analytics — planned schema (pre-PostHog; kept as reference)
+
+> Superseded as the PRIMARY sink by the PostHog decision above — the funnel
+> events now flow through `@momlee/core/analytics` → PostHog (same event
+> names). The schema below stays as reference in case Maor revives a
+> first-party mirror.
 
 Goal: know where users ABANDON onboarding (per-step funnel dashboard; push
-re-engagement for abandoners). First-party only (see Analytics decision above).
+re-engagement for abandoners).
 
 - Table `onboarding_events`: `id uuid pk` · `anon_id uuid` (device-generated
   before auth, stored in AsyncStorage) · `user_id uuid null` (linked after
