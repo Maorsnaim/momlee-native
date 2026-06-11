@@ -71,6 +71,10 @@ FULL scale confirmed from the Typography sheet (node 1023:36715, 2026-06-11):
 - `Buttons/Button` (all hierarchies): padding `14px/10px` — neither 10 nor 14 exists in the spacing scale (…8, 12, 16…).
 - `Buttons/Social button`: raw `gap: 10px` between label and logo.
 
+**Set↔screen contradiction (Maor to reconcile):** `_Mega input field base`
+types its digit `display-lg` (48/60, -2% tracking) but the OTP screen
+instances render 30/38 (display-sm). Code follows the SCREEN.
+
 **Per-screen issues:**
 
 - **Stray font:** the phone error text uses `Brown LL Heb: Medium` instead of Noto Sans Hebrew (Phone/UnsupportedCountryError screen).

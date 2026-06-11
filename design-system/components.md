@@ -39,7 +39,8 @@ From the Mom onboarding Figma. **All are "planned" — not built yet.**
 | Input (+INPUT_TEXT_STYLE) | the Figma `Input` base (17297:8153): five states Empty/Focused/Filled/Error/Disabled + ExtrasBefore/After slots | field compositions build on it: Forms/PhoneField (built), Forms/FullNameField + Forms/DateOfBirthField (when Name/BirthDate screens land), Forms/CountryDropdown (to be re-composed on Input slots) |
 | PhoneField | LTR digits row: pressable dial box + number | dial press reopens country selector |
 | CountryDropdown (+flags.ts, 48 Figma flag SVGs) | inline type-to-search dropdown, Israel default | per screen-04 annotation |
-| OtpInput | 6 boxes, brand filled state, oneTimeCode autofill | |
+| MegaInputField | the Figma `_Mega input field base` (1106:66560): Size sm64/md80/lg96 × State Placeholder/Filled/Focused(ring)/Disabled/Error |
+| OtpInput | composes 6× MegaInputField (sm); hidden oneTimeCode input; Error state on failed code | |
 | BrandMark | one component, `variant: 'wordmark' | 'heart'` (Figma variants) | brand marks never mirror |
 | LegalText | SMS consent copy | exact Figma copy |
 
