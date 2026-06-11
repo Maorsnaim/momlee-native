@@ -69,6 +69,6 @@ FULL scale confirmed from the Typography sheet (node 1023:36715, 2026-06-11):
 
 - **Stray font:** the phone error text uses `Brown LL Heb: Medium` instead of Noto Sans Hebrew (Phone/UnsupportedCountryError screen).
 - **Untokenized literals:** CTA padding `14px`; gaps `10px`/`4px`/`6px`; option-circle padding `10px`; boy-option border `#739fd2` (no token, unlike the girl `utility-brand-500`); `text-black` on option labels; screen 08 background is literal `white` vs `bg-primary` elsewhere; Skip button has raw `14px/20px` instead of text-sm tokens.
-- Missing scale steps not yet observed: `spacing-2xl`, `radius-sm`/`lg`, `display-xs` font size.
+- Remaining provisional: `radius-sm` only (spacing-2xl, radius-lg and the full type scale are now confirmed).
 
 > Note: `font-family/font-family-body` maps to the `fontFamily.sans` role token — always reference typography via the role token in code, never the raw family name.
