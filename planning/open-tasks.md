@@ -36,6 +36,21 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## Architecture Gate (2026-06-11) — NEW, applies to all data wiring
+
+The layered call chain **Screen → Hook → Service → Repository → Supabase** is now
+a hard rule (see `../knowledge/architecture.md` → "The layered call chain" and the
+updated **momlee-react-native** skill). Screens never import Supabase; business
+logic lives only in services; only the repository layer touches the client.
+
+- [ ] **Wire the lint enforcement** in the app repo: eslint `no-restricted-imports`
+      so `@supabase/*` / the Supabase client import only inside the repository
+      layer, and `apps/*` cannot import `@momlee/supabase`. Config sketch is in
+      `architecture.md`. Until the lint rule lands, the rule is still binding —
+      review for it manually.
+- [ ] If any existing screen already calls Supabase directly, refactor it into the
+      chain before building on top of it.
+
 ## Dev-environment notes (already in effect)
 
 - The app is pinned to **Expo SDK 54** so the App Store **Expo Go** runs it on a

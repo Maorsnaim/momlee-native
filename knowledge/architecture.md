@@ -79,8 +79,91 @@ apps/web   ──┤→ features → ui → tokens
 - No reverse imports (a package never imports from an app).
 - **Enforcement:** eslint `import/no-restricted-paths`.
 
+## The layered call chain — the Architecture Gate (non-negotiable)
+
+Every piece of remote data or server action flows through **all four layers, in order**:
+
+```
+Screen → Hook → Service → Repository → Supabase
+```
+
+**Why this is law:** a screen that calls Supabase directly looks harmless on day 1.
+Three months later that same call has grown analytics, rate-limit handling, retry,
+logging, and error handling — and every screen in the app is 300 lines of
+duplicated plumbing. The chain exists so each of those concerns has exactly ONE
+home. **A layer may be a thin pass-through today; it may NEVER be skipped.**
+
+| Layer | Lives in | Does | Never does |
+|---|---|---|---|
+| **Screen** | `apps/*` (Expo Router routes) | Renders UI, binds to a hook | Import `@momlee/supabase` or `@supabase/*`; hold business logic; know Supabase exists |
+| **Hook** (`useX`) | `@momlee/features/<module>` | UI-state orchestration: loading/error/disabled, calls the service | Talk to Supabase; hold domain rules |
+| **Service** | `@momlee/features/<module>` (pure cross-feature rules → `@momlee/core`) | Business logic: validation (Zod), domain rules, analytics events, retry/rate-limit policy, logging, error mapping | Import the Supabase client; render anything |
+| **Repository** | `@momlee/supabase` | The ONLY layer that talks to Supabase (queries/mutations/RPC/realtime, generated types) | Business logic; UI concerns |
+
+> Note the import rules above: `core` never imports `supabase`, so services that
+> need data live in the **feature module** and call the repository; `core` holds
+> the pure domain rules they apply.
+
+### Forbidden (the day-1 shortcut that becomes the 300-line screen)
+
+```tsx
+export function PhoneScreen() {
+  const sendOtp = async () => {
+    await supabase.auth.signInWithOtp({ phone }); // ❌ screen talks to Supabase
+  };
+  return <Button onPress={sendOtp} />;
+}
+```
+
+### Mandatory
+
+```tsx
+// Screen — apps/*: UI only; doesn't know Supabase exists
+export function PhoneScreen() {
+  const { sendOtp } = usePhoneAuth();
+  return <Button onPress={sendOtp} />;
+}
+
+// Hook — @momlee/features/onboarding/use-phone-auth.ts: UI-state orchestration
+export function usePhoneAuth() {
+  // loading / error state lives here
+  const sendOtp = (phone: string) => authService.sendOtp(phone);
+  return { sendOtp };
+}
+
+// Service — @momlee/features/onboarding/auth-service.ts: business logic home
+export const authService = {
+  async sendOtp(phone: string) {
+    // validation, analytics, rate-limit policy, retry, logging land HERE
+    return authRepository.sendOtp(phone);
+  },
+};
+
+// Repository — @momlee/supabase: the ONLY file that imports the client
+export const authRepository = {
+  sendOtp(phone: string) {
+    return supabase.auth.signInWithOtp({ phone });
+  },
+};
+```
+
+### Interim note (while the app still lives in `apps/mobile` without all packages)
+
+The **layers** are mandatory from the first line of code; the package homes can
+migrate later. Until a feature-module package exists, keep the same four files
+per feature inside the app (e.g. `src/features/<module>/use-x.ts`,
+`src/features/<module>/x-service.ts`) with the repository in the shared
+Supabase layer — never collapse layers "until we have packages".
+
+### Machine enforcement (required, not optional)
+
+- eslint `no-restricted-imports` / `import/no-restricted-paths`:
+  - `@supabase/*` and the Supabase client are importable **only** inside the repository layer (`packages/supabase`, or the interim repository folder).
+  - `apps/*` may not import `@momlee/supabase` at all — screens reach data only through feature hooks.
+- A PR that violates the boundary fails lint — it never reaches review as a judgment call.
+
 ## Access from code
-Remote/server state goes **through `@momlee/supabase` only** (queries/mutations/RPC + generated types). No SQL or direct Supabase calls from `apps/*`.
+Remote/server state goes **through `@momlee/supabase` only** (queries/mutations/RPC + generated types), reached via the chain above. No SQL or direct Supabase calls from `apps/*`.
 
 ## Mobile component taxonomy (mirrors the Figma design system)
 

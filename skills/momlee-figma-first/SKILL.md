@@ -15,7 +15,10 @@ The Figma file is the **source of truth** for both visuals AND logic. Annotation
 
 ```
 /plugin marketplace update momlee
+/plugin install momlee-guide@momlee
 ```
+
+(Both lines — the update alone refreshes the marketplace, the install pulls the new plugin version into the cache.)
 
 Then check `../../planning/open-tasks.md` for new status or pending actions. Maor pushes updates (tokens, rules, security notes, roadmap) through this plugin — working against a stale copy means building against stale rules. This is a reminder, not a blocker: suggest it once, don't nag every message.
 
@@ -88,7 +91,7 @@ The Figma node already encodes most of the screen. **Read it from the file; neve
 | When you are… | Use skill |
 |---|---|
 | Styling: choosing colors/spacing/type/radius/shadow, reading or adding tokens | **momlee-design-system** |
-| Writing Expo/RN structure, NativeWind, data layer, package boundaries, stack choices | **momlee-react-native** |
+| Writing Expo/RN structure, NativeWind, data access (Screen → Hook → Service → Repository), package boundaries, stack choices | **momlee-react-native** |
 | Anything directional: layout, logical props, i18n strings, `dir`/`I18nManager`, RTL QA | **momlee-rtl** |
 | Accessibility: roles, labels, hit targets, contrast, focus order, Dynamic Type | **momlee-accessibility** |
 | Wiring data/actions, auth, roles, validation, RLS, secrets, webhooks | **momlee-security** |

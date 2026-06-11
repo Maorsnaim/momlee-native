@@ -1,6 +1,6 @@
 ---
 name: momlee-react-native
-description: Use whenever you write or edit MomLee native app code (Expo / React Native / NativeWind) — screens, navigation, components, hooks, data access, or package structure. Enforces the Expo + RN + NativeWind architecture, cross-platform code sharing (iOS now → Android → Web), styling via NativeWind + tokens, no direct Supabase calls from UI, no business logic in components, and stack discipline (no unapproved libraries, TS strict). Trigger on any MomLee native code work or architecture/package-boundary decision.
+description: Use whenever you write or edit MomLee native app code (Expo / React Native / NativeWind) — screens, navigation, components, hooks, data access, or package structure. Enforces the Expo + RN + NativeWind architecture, cross-platform code sharing (iOS now → Android → Web), styling via NativeWind + tokens, the layered call chain (Screen → Hook → Service → Repository → Supabase — the Architecture Gate), no business logic in components, and stack discipline (no unapproved libraries, TS strict). Trigger on any MomLee native code work, any Supabase/data wiring, or any architecture/package-boundary decision.
 ---
 
 # MomLee React Native — architecture & discipline
@@ -28,10 +28,26 @@ Sivan builds **without a Mac**, so the iOS path stays in the cloud. **Stay in th
 - Style via **NativeWind + tokens** only — no hardcoded values (see **momlee-design-system**).
 - Use **logical Tailwind classes** that flip for RTL (`ps/pe`, `ms/me`, `start/end`) — never `left/right`/`pl/pr`/`ml/mr` (see **momlee-rtl**).
 
-## Hard boundaries
+## The Architecture Gate — Screen → Hook → Service → Repository (HARD STOP)
 
-- **No direct Supabase calls from UI.** All remote/server state goes through `@momlee/supabase` (queries/mutations/RPC + generated types). No SQL in `apps/*`.
-- **No business logic in components.** Domain rules live in `@momlee/core` / `@momlee/features`. A component does one job; if a file grows too large it does too much — split it. Explicit prop types, variants over magic booleans.
+Every remote read/write flows through **all four layers, in order** — no skipping:
+
+```
+Screen → Hook → Service → Repository → Supabase
+```
+
+- **Screen** renders UI and binds to a hook. It does not know Supabase exists. A screen that imports `@momlee/supabase` or `@supabase/*` is a **bug** — even one line, even "just this once".
+- **Hook** (`useX`, in the feature module) holds UI-state orchestration only (loading/error/disabled) and calls the service.
+- **Service** (feature module; pure domain rules in `@momlee/core`) is the ONLY home for business logic: validation (Zod), analytics, retry/rate-limit policy, logging, error mapping.
+- **Repository** (`@momlee/supabase`) is the ONLY layer that imports the Supabase client.
+
+**"This screen is simple" is not an exception — it's how every 300-line screen
+was born.** A layer may be a thin pass-through today; it may never be skipped.
+The boundary is also lint-enforced (`no-restricted-imports`) so violations fail
+CI, not code review. Full layer table, code example, interim folder layout, and
+lint config: `../../knowledge/architecture.md` → "The layered call chain".
+
+- **No business logic in components.** A component does one job; if a file grows too large it does too much — split it. Explicit prop types, variants over magic booleans.
 
 ## Stack discipline
 
