@@ -125,3 +125,12 @@ a focused question. Never ship a plausible guess.** Real cost of guessing:
 social buttons shipped lg/20 when the screen instance was md/16; wide buttons
 shipped 48 when the instance was 44 — every guess = a correction round.
 
+### Case file: the improvised Top Nav (2026-06-11)
+
+Adding a back button the screen frame didn't show (a product decision), the
+assistant invented a shared row (back + heart) instead of opening the TEMPLATE
+component — whose structure is explicit: `Top Nav Container` (back/skip) is
+its OWN row ABOVE `Page Head`, and the heart NEVER leaves the Page Head start
+side. Rule: when adding an element beyond the frame, the template/set defines
+its placement — open it; if it's hidden/absent there too, ASK Maor.
+
