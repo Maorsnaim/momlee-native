@@ -244,13 +244,18 @@ a hard rule (see `../knowledge/architecture.md` → "The layered call chain" and
 updated **momlee-react-native** skill). Screens never import Supabase; business
 logic lives only in services; only the repository layer touches the client.
 
-- [ ] **Wire the lint enforcement** in the app repo: eslint `no-restricted-imports`
-      so `@supabase/*` / the Supabase client import only inside the repository
-      layer, and `apps/*` cannot import `@momlee/supabase`. Config sketch is in
-      `architecture.md`. Until the lint rule lands, the rule is still binding —
-      review for it manually.
-- [ ] If any existing screen already calls Supabase directly, refactor it into the
-      chain before building on top of it.
+- [x] **DONE (2026-06-11, commit `ce1147a` on momlee-native): machine
+      enforcement is LIVE in the app repo.** eslint gates (Architecture, RTL
+      physical classes/keys, tokens-only hex, Permission wrapper, Analytics
+      wrapper, Dates) in `apps/mobile/eslint.config.js` — CI runs lint, so a
+      violation fails the build. Plus `scripts/momlee/check-deps.mjs`
+      (Dependency Governance vs `stack-allowlist.json` — adding a dep requires
+      editing the allowlist = explicit approval) and `check-migrations.mjs`
+      (post-2026-06-12 migrations: RLS with CREATE TABLE + `-- retention:`
+      declaration), wired as a CI step. Verified: current code passes clean;
+      a violating test file trips all five gate families.
+- [x] No existing screen calls Supabase directly (verified by the lint run —
+      0 errors).
 
 ## Dev-environment notes (already in effect)
 
