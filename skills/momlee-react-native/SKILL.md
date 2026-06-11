@@ -43,6 +43,10 @@ Screen → Hook → Service → Repository → Supabase
 
 **"This screen is simple" is not an exception — it's how every 300-line screen
 was born.** A layer may be a thin pass-through today; it may never be skipped.
+One sanctioned relaxation (Maor, 2026-06-11): when there is genuinely no UI
+state to orchestrate, the hook may be omitted — **minimum acceptable:**
+`Screen → Service → Repository → Supabase`. The service and repository are
+NEVER skipped; `Screen → Supabase` stays forbidden.
 The boundary is also lint-enforced (`no-restricted-imports`) so violations fail
 CI, not code review. Full layer table, code example, interim folder layout, and
 lint config: `../../knowledge/architecture.md` → "The layered call chain".
@@ -58,25 +62,29 @@ Ask first: **"who owns this data?"** Then place it — and never anywhere else:
 | **UI state** (toggle, focus, sheet open, local step) | Local `useState`/`useReducer` in the component/hook | A global store for screen-local concerns |
 | **Server state** (anything from the DB) | **TanStack Query** in the feature hook — `queryFn`/`mutationFn` call the service → repository (Architecture Gate intact) | `useEffect`+`useState` fetching; copying server data into a client store |
 | **Form state** | **React Hook Form** + Zod resolver (schemas from `@momlee/core`) | Hand-rolled per-field `useState` across a form |
-| **Global client state** (auth session, locale/direction) | ONLY when nothing else fits — **per-store Maor approval** | "Zustand everywhere"; a store per feature; caching server data globally |
+| **Global app state** | **Zustand**, RESTRICTED to the approved list: session state, locale, RTL/LTR direction, feature flags, temporary onboarding progress, global UI state | Server data in Zustand (meetups, providers, messages, notifications, search results — those are TanStack Query); a store per feature; "Zustand everywhere" |
 
 Server-owned data: the TanStack Query cache IS the state — don't mirror it.
-Screen-owned: keep it local. Truly app-wide: rare — justify it or it doesn't exist.
+Screen-owned: keep it local. Truly app-wide: ONLY the approved Zustand list in
+`../../knowledge/stack.md` — anything beyond it needs Maor.
 
 ## Stack discipline & Dependency Budget
 
 - **Don't add a dependency if the feature can be built in under 100 LOC** with
   the existing stack. Write the 100 lines: we own them, they can't be
   deprecated, they add zero bundle weight and zero supply-chain risk.
-- **Every dependency requires written justification** — print BEFORE installing:
+- **No new dependency without explicit approval.** Answer Maor's four questions
+  and print the gate BEFORE installing — if approval is not explicitly given:
+  **STOP, do not install.**
 
 ```
 DEPENDENCY GATE: <package>
-- Under-100-LOC test: <can the existing stack build this? why not>
-- Justification: <what it does that's worth owning a dependency for>
-- Cost: <bundle size, native code? (breaks Expo Go), transitive deps,
-         maintenance, data it collects (SDK -> momlee-data-inventory)>
-Verdict: BUILD IT (<100 LOC) | ADD — needs Maor's approval + a stack.md row in the same change
+- Problem it solves: <Maor Q1>
+- Current stack can't because: <Maor Q2 — the under-100-LOC test>
+- Justification for one more dep: <Maor Q3>
+- Long-term maintenance cost: <Maor Q4 — bundle size, native code? (breaks
+  Expo Go), transitive deps, data it collects (SDK -> momlee-data-inventory)>
+Verdict: BUILD IT (<100 LOC) | ADD — needs Maor's explicit approval + a stack.md row in the same change
 ```
 
 - Do **not** introduce a library/SDK/service that is not in `../../knowledge/stack.md` without explicit approval. First ask "does the stack already solve this?" (Supabase, Zod, NativeWind, TanStack Query, RHF…).

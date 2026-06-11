@@ -66,6 +66,9 @@ re-engagement for abandoners).
 - `apps/mobile/src/lib/supabase.ts` — **lazy, fail-soft client**: returns null
   without env keys so the app still runs (Expo Go demos/tests); auth/analytics
   degrade to console warnings. Session in AsyncStorage, autoRefresh+persist.
+  ⚠️ **MIGRATE:** per the secure-storage Iron Law (2026-06-11, `stack.md`),
+  the session/auth tokens must move to an **expo-secure-store** adapter —
+  AsyncStorage is forbidden for tokens. Tracked in `../planning/open-tasks.md`.
 - `lib/auth.ts` — `requestOtp(e164)` / `verifyOtp(e164, code)` wrap Supabase
   Phone Auth (Twilio Verify configured server-side only). UI resend cooldown
   is UX; the real rate limit is server-side.

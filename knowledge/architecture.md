@@ -94,6 +94,11 @@ logging, and error handling — and every screen in the app is 300 lines of
 duplicated plumbing. The chain exists so each of those concerns has exactly ONE
 home. **A layer may be a thin pass-through today; it may NEVER be skipped.**
 
+**One sanctioned relaxation** (Maor, 2026-06-11): when there is genuinely no UI
+state to orchestrate, the hook may be omitted — minimum acceptable:
+`Screen → Service → Repository → Supabase`. The service and repository are
+never skipped; `Screen → Supabase` is always forbidden.
+
 | Layer | Lives in | Does | Never does |
 |---|---|---|---|
 | **Screen** | `apps/*` (Expo Router routes) | Renders UI, binds to a hook | Import `@momlee/supabase` or `@supabase/*`; hold business logic; know Supabase exists |

@@ -36,6 +36,30 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## Core Technology Stack — Iron Law (2026-06-11, Maor) — READ stack.md
+
+`knowledge/stack.md` now carries the full canonical stack rules: Expo Router
+(file-based, never React Navigation directly), TanStack Query (centralized
+query keys), RHF+Zod for every form, the backend flow (minimum acceptable:
+Screen → Service → Repository; Screen → Supabase forbidden), the PostHog
+wrapper (`analytics.track` ✅ / `posthog.capture` ❌), **expo-secure-store**,
+Reanimated + Gesture Handler, Gorhom sheets, **Zustand (restricted list:
+session/locale/direction/feature-flags/temp-onboarding/global-UI — never
+server data)**, **date-fns**, **expo-location**, and the Dependency
+Governance 4 questions (no approval = STOP).
+
+- [ ] **Sivan: migrate the Supabase session storage to expo-secure-store.**
+      The current client (`apps/mobile/src/lib/supabase.ts`) persists the
+      session in AsyncStorage — now forbidden for tokens. Use a SecureStore
+      storage adapter for the Supabase client. (Note: SecureStore values are
+      capped at 2KB each — Supabase sessions can exceed it; the standard
+      pattern is an AES-key-in-SecureStore + encrypted-payload-in-AsyncStorage
+      adapter, e.g. Supabase's documented Expo recipe. Pick with Maor if
+      unsure.)
+- [ ] **Sivan: add `expo-secure-store`, `date-fns`, `expo-location`, `zustand`**
+      as each becomes needed (all stack-approved now; Expo modules are Expo
+      Go safe).
+
 ## State Management Guard + Dependency Budget (2026-06-11) — NEW, in momlee-react-native
 
 **State has ONE home** (Maor's decision; TanStack Query + React Hook Form are

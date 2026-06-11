@@ -9,7 +9,7 @@ description: Use whenever you wire data or actions into MomLee — auth, roles, 
 
 ## Must-follow enforcement summary
 
-1. **No secrets in the client.** Never ship `STRIPE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `JWT_SECRET`, `RESEND_API_KEY`, `TWILIO_AUTH_TOKEN`, `PERSONA_API_KEY`. Client may hold only public keys: `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_ANON_KEY`, `EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN`, `EXPO_PUBLIC_POSTHOG_KEY` (write-only project key).
+1. **No secrets in the client.** Never ship `STRIPE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `JWT_SECRET`, `RESEND_API_KEY`, `TWILIO_AUTH_TOKEN`, `PERSONA_API_KEY`. Client may hold only public keys: `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_ANON_KEY`, `EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN`, `EXPO_PUBLIC_POSTHOG_KEY` (write-only project key). Sensitive LOCAL data (auth tokens, session) lives in **expo-secure-store** — never AsyncStorage, never plain text.
 2. **Never `service_role` on the client.** Client uses the `anon` key only; service_role is server-side, least-privilege.
 3. **Server-side validation (Zod)** on every API/edge function before acting. Client validation is UX only.
 4. **Authorization on every action** — authenticated ≠ authorized. Check the user is actually allowed (e.g. `meetup.host_id === user.id`).
