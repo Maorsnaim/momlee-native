@@ -35,6 +35,7 @@
 | **Payments** | **Stripe** Atlas (incorporation) + Stripe Payments/Billing | Pro subscription (trial month → monthly). |
 | **Payments (stores)** | Apple IAP / Google IAP | "As required" — store rules may force IAP for digital content. Evaluated before store release; plan a `billingProvider` abstraction. |
 | **Animations & gestures** | **react-native-reanimated** + **react-native-gesture-handler** | First-class approved (2026-06-11): all advanced animations via Reanimated, all gesture interactions via Gesture Handler (sheets, swipe actions, card interactions, navigation animations). No custom animation frameworks. |
+| **Phone formats** | **libphonenumber-js** | Decided 2026-06-11 (retro gate): per-country phone parsing/validation/E.164 for EVERY dropdown country — IL-only support never means IL-only validation. Lives in `@momlee/core` (validatePhoneForCountry); UI never parses numbers itself. |
 | **Dates** | **date-fns** | Decided 2026-06-11. All date calculations + formatting (baby age, due dates, meetup dates, relative time). Never Moment.js; no custom date utilities unless unavoidable. |
 | **Location** | **expo-location** | Decided 2026-06-11. All device location access (nearby moms/meetups, provider discovery, city detection). Distance/geo math stays server-side (see Maps row + `privacy.md` — never expose another user's raw coordinates). |
 | **i18n** | `@momlee/i18n` | he-IL default, **RTL-first**, future LTR. |

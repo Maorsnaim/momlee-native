@@ -131,3 +131,12 @@ Screen list, in order:
 
 Per-screen annotation notes get appended under each screen above as they are
 captured.
+
+## Phone screen — R5 (business decision, Maor 2026-06-11)
+
+Unsupported country selected => the inline error shows AND the phone-number
+field goes to the Input **Disabled** state (the dial box stays pressable to
+reopen the selector). Validation, when enabled, follows the SELECTED
+country's format via libphonenumber-js (never IL-hardcoded). Enforced by
+screen tests in `apps/mobile/src/app/__tests__/phone.test.tsx`.
+
