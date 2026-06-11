@@ -55,3 +55,15 @@ were added to country flags — Figma has none). Component VARIANTS matter (the
 heart logomark is not the full wordmark). Copy is diffed word-for-word against
 the Figma text. Assets come from Figma (SVGs — sanitize `var(--fill-N, #hex)`
 to literal colors; react-native-svg can't parse CSS vars).
+
+## Figma Variants ↔ React props (one component per Figma component set)
+
+A Figma component with Variables/variants maps to **ONE React component whose
+props mirror those variables** — NOT to sibling components per variant (real
+case: Button/IconCta/BackButton/SocialButton were wrongly four components;
+consolidated into one `Button` with `kind: 'text' | 'icon' | 'social'`).
+When variant prop-contracts diverge (label vs icon vs provider), use a
+**discriminated union** so invalid combinations don't type-check. Internal
+glyphs/assets (e.g. the Google "G") are implementation details, not inventory
+components. Same for brand assets: one `BrandMark` with `variant:
+'wordmark' | 'heart'`, not Logo + Logomark.
