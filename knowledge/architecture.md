@@ -199,7 +199,14 @@ Monorepo gotchas (cost us real debugging):
   (`rm -rf node_modules apps/*/node_modules packages/*/node_modules && pnpm install`).
 
 **Icons policy:** icons come ONLY from the Figma Icons library (node 3463:407484),
-downloaded as currentColor SVGs into `assets/icons/` and exposed via `base/Icon`
-(with SEMANTIC `forward`/`backward`). Never substitute look-alike glyphs from
-other icon packs (the early Ionicons stand-ins were replaced).
+downloaded as currentColor SVGs into `packages/ui/assets/icons/` and exposed via
+the `Icon` primitive (with SEMANTIC `forward`/`backward`). Never substitute
+look-alike glyphs from other icon packs (the early Ionicons stand-ins were replaced).
+
+**SVG sanitization rule:** Figma asset exports bake paints as BOTH hex AND named
+colors (`stroke="black"`). Sanitize every `stroke`/`fill` value except `none` to
+`currentColor` — a hex-only regex shipped a black CTA arrow once:
+`re.sub(r'(stroke|fill)="(?!none|currentColor)[^"]*"', r'\1="currentColor"', svg)`.
+Icon color always comes from the CALLER via a token (e.g. fg-white inside the
+brand CTA) — state-dependent colors are the consumer's mapping, never baked in.
 
