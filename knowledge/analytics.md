@@ -63,6 +63,17 @@ Payload keys `snake_case`, ids entity-named (`meetup_id`, never `id`).
 New events extend this table (same change that adds them — keep it the live
 registry). Per-screen specs also live in the Figma annotation `Events` section.
 
+## Implementation status (2026-06-11, audit H3)
+
+The wrapper EXISTS in code: `packages/core/src/analytics/` (typed event union
+`AnalyticsEvents` + provider registry; screens call `analytics.track`).
+Registered providers: console (dev) + the Supabase `onboarding_events` funnel
+mirror. **PostHog provider is PENDING**: needs Maor's PostHog project key +
+the `posthog-react-native` dependency gate; it will land as
+`providers/posthog.provider.ts` (the only SDK import).
+OPEN (Maor): `onboarding_step_viewed` predates the seed taxonomy — adopt into
+the table or migrate to the seed events.
+
 ## PII rule — nothing sensitive, ever
 
 Never send to analytics: **phone, full name, child name, exact birth date,

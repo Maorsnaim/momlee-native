@@ -283,3 +283,21 @@ logic lives only in services; only the repository layer touches the client.
   without checking Expo Go support. See `../knowledge/dev-environment.md`.
 - pnpm monorepo with `node-linker=hoisted` (required for Metro). After pulling
   dep changes: `pnpm install` from the repo root.
+
+## /momlee-audit round 2 — fixes landed (2026-06-11, commit a5a024a)
+
+DONE (Maor approved "fix everything"): H1 session→expo-secure-store ·
+H2 not-configured bypass now __DEV__-only · H3 analytics wrapper in
+@momlee/core (typed taxonomy + providers; screens use analytics.track) ·
+G1 lint gates now cover packages/ui+core (caught & fixed physical offsets in
+OtpInput) · R1 CTA Loading state wired · L2 fontByWeight token · import dups.
+
+STILL OPEN:
+- [ ] PostHog: Maor's project key + dependency gate → providers/posthog.provider.ts
+- [ ] Taxonomy decision (Maor): adopt `onboarding_step_viewed` or migrate to seed events
+- [ ] Component FILE naming: conventions say kebab-case; component files are
+      PascalCase (RN standard) — Maor to rule
+- [ ] R3 offline handling (with the shared error/empty states work)
+- [ ] M4 regenerate database.types.ts after the live migration applies
+- [ ] Live security deploy (see the security section above)
+
