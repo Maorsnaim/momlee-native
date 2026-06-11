@@ -88,6 +88,12 @@ Then press `w` (web, no Mac), `a` (Android emulator), `i` (iOS Simulator — nee
   developer's server) — kill only your own dedicated port (e.g. 8099) by PID.
 - `ERR_PNPM_RECURSIVE_EXEC_NO_PACKAGE` = you're OUTSIDE the workspace (e.g. a
   parent folder). Run pnpm from inside the repo (`MomLee/...`).
+- **New token/class shows BLACK (or unstyled)?** NativeWind compiles the
+  className map at SERVER START. After ANY change to `@momlee/tokens`
+  (preset) or `tailwind.config.js`, RESTART the dev server (Ctrl+C →
+  `pnpm dev`) and reload the app — Fast Refresh alone delivers the new JSX
+  but not the new classes, so e.g. a fresh `border-*` token falls back to
+  the RN default (black border).
 
 ## Prerequisites (accounts)
 
