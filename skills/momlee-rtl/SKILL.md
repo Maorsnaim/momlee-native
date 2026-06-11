@@ -82,3 +82,17 @@ RTL is enforced by ONE primitive, not per-screen patches: every user-facing
 text goes through **`AppText`** (`apps/mobile/src/components/AppText.tsx` — fix path if moved), which applies `writingDirection:'rtl'` + **`textAlign:'auto'`** by default with an `align` prop (`right`|`center`|`ltr`). Raw `Text` from react-native is allowed only inside AppText/UnderlineField internals; textAlign utility classNames are forbidden.
 
 **Why `auto` and not `right`:** with native RTL active, React Native treats `textAlign 'left'/'right'` LOGICALLY — `'right'` renders at the **visual left**. `'auto'` follows the layout direction (RTL → visual right). This was verified by pixel measurement on the simulator; don't "fix" it back.
+
+## Directional icons — the semantic-forward principle (Figma EN↔HE frames, 2026-06-11)
+
+Maor authored a mirrored English frame (03_Onboarding/English/.../Phone/Empty) to define the rule. Comparing it to the Hebrew frame:
+
+| Element | RTL (he) | LTR (en) | Rule |
+|---|---|---|---|
+| Logomark | visual right | visual left | logical **start** — flips automatically |
+| Forward CTA | visual left, `arrow-left` | visual right, `arrow-right` | position = logical **end**; icon = **SEMANTIC "forward"** resolved per direction |
+| chevron-down | unchanged | unchanged | non-directional icons NEVER flip |
+| Digits/phone row | LTR | LTR | digits always LTR, both directions |
+| Text alignment | right | left | follows language (`textAlign:'auto'`) |
+
+In code: `const FORWARD_ICON = direction === 'rtl' ? 'arrow-back' : 'arrow-forward'` (see `IconCta.tsx`) — derive from the i18n `direction`, never hardcode a side. In Figma: directional components keep mirrored variants (arrow-left ↔ arrow-right); content/logos do NOT mirror.
