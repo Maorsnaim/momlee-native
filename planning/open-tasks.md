@@ -36,6 +36,18 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## Component Reuse Audit (2026-06-11) — NEW, hard gate before any new component
+
+"Reuse before create" is now a **proven audit**, not a guideline (upgraded in
+**momlee-design-system**; figma-first rule #2 and /momlee-screen step 6 point at
+it). Before creating ANY component, Claude must search `components.md` (both
+tables) + the Figma inventory + the code, by name AND synonyms
+(Sheet/Modal/Drawer, Badge/Chip/Tag…), print a `REUSE AUDIT` proof block, and
+verdict REUSE → EXTEND → CREATE. Base primitives (Button, Input, Card, Avatar,
+Badge, Sheet) are presumed to exist — a second one is a duplicate. A CREATE
+verdict requires the component in Figma first + a row in `components.md` in the
+same change. No action needed beyond updating the plugin.
+
 ## AI Prompt Guard (2026-06-11) — NEW, applies to everything
 
 New skill **momlee-prompt-guard**: if information is not in an official source
