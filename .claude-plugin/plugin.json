@@ -1,7 +1,7 @@
 {
   "name": "momlee-guide",
   "displayName": "MomLee Guide",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "MomLee development contract: Figma-first, tokens-only, RTL-first, secure, private, accessible, cross-platform (Expo/React Native) workflow. Shared between Maor and Sivan; carries the living Design System, knowledge, and planning channels.",
   "author": { "name": "Maor" },
   "keywords": ["momlee", "react-native", "expo", "design-system", "rtl", "figma"]

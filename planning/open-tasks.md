@@ -36,6 +36,25 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## Machine enforcement: full map (2026-06-11, commits ce1147a/940a6eb/921f9b1)
+
+Three layers now run on every push/PR in the app repo: **eslint** (12+ rule
+families: architecture, RTL incl. raw-Text ban, tokens-only incl. font-weights
++ fontFamily + arbitrary px, permissions, analytics SDK + PII payloads + event
+format, select('*'), dates) and **CI scripts** (deps allowlist, migration
+RLS/retention/rollback, RTL manifest flags, naming auto-layer-names +
+synonyms, secrets/.env/public-env, figma screen-node refs). All verified
+positive + negative.
+
+- [ ] **Backfill Figma node refs** on the 5 grandfathered screens (index,
+      welcome, phone, otp, name): add `// figma: <nodeId>` with the REAL node
+      ids (don't guess — pull from the Figma map), then empty GRANDFATHERED in
+      scripts/momlee/check-figma-refs.mjs.
+- [ ] **Consider eslint-plugin-react-native-a11y** (accessibility gate at lint
+      level: roles/labels/touchables) — new devDependency, so it needs the
+      DEPENDENCY GATE + allowlist + verification it works with the Expo flat
+      config. Recommended next mechanical step alongside RLS tests in CI.
+
 ## Worklog is now MECHANICALLY enforced (2026-06-11) — hooks in the plugin
 
 The plugin now ships Claude Code **hooks** (`hooks/hooks.json`, Node script):
