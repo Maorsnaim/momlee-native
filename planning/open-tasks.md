@@ -36,6 +36,24 @@ anything that depends on the old public buckets or on querying `users` directly.
 New code MUST follow the fixed patterns (signed URLs, `user_display_info`,
 env tokens) so it's correct the moment the deployment lands.
 
+## State Management Guard + Dependency Budget (2026-06-11) — NEW, in momlee-react-native
+
+**State has ONE home** (Maor's decision; TanStack Query + React Hook Form are
+now stack-approved): UI state = local `useState`; server state = **TanStack
+Query** in feature hooks (queryFn → service → repository); form state =
+**React Hook Form** + Zod resolver; global client state = ONLY if nothing else
+fits, per-store Maor approval (no Zustand-by-default). Never copy server data
+into a client store.
+
+**Dependency Budget:** don't add a dependency if the feature can be built in
+under 100 LOC with the existing stack; every dependency prints a
+`DEPENDENCY GATE` block (under-100-LOC test, justification, cost) and needs
+Maor's approval + a `stack.md` row in the same change.
+
+- [ ] **Sivan: add `@tanstack/react-query` + `react-hook-form` (+ Zod resolver)**
+      when the first data-fetching/form screen needs them — both JS-only,
+      Expo Go safe. Until then nothing to install.
+
 ## Analytics: PostHog via wrapper (2026-06-11, Maor's decision) + Analytics Gate
 
 **Tool decided: PostHog** (supersedes the first-party-only plan from

@@ -1,6 +1,6 @@
 ---
 name: momlee-react-native
-description: Use whenever you write or edit MomLee native app code (Expo / React Native / NativeWind) — screens, navigation, components, hooks, data access, or package structure. Enforces the Expo + RN + NativeWind architecture, cross-platform code sharing (iOS now → Android → Web), styling via NativeWind + tokens, the layered call chain (Screen → Hook → Service → Repository → Supabase — the Architecture Gate), no business logic in components, and stack discipline (no unapproved libraries, TS strict). Trigger on any MomLee native code work, any Supabase/data wiring, or any architecture/package-boundary decision.
+description: Use whenever you write or edit MomLee native app code (Expo / React Native / NativeWind) — screens, navigation, components, hooks, data access, state management, forms, or package structure — and BEFORE adding any dependency. Enforces the Expo + RN + NativeWind architecture, cross-platform code sharing (iOS now → Android → Web), styling via NativeWind + tokens, the layered call chain (Screen → Hook → Service → Repository → Supabase — the Architecture Gate), the State Management Guard (UI=local, server=TanStack Query, forms=React Hook Form, global only if no choice), and the Dependency Budget (under 100 LOC = build it; every dep justified). Trigger on any MomLee native code work, Supabase/data wiring, state/store/form decision, npm/pnpm install, or architecture/package-boundary decision.
 ---
 
 # MomLee React Native — architecture & discipline
@@ -49,9 +49,37 @@ lint config: `../../knowledge/architecture.md` → "The layered call chain".
 
 - **No business logic in components.** A component does one job; if a file grows too large it does too much — split it. Explicit prop types, variants over magic booleans.
 
-## Stack discipline
+## State Management Guard — every state has ONE home
 
-- Do **not** introduce a library/SDK/service that is not in `../../knowledge/stack.md` without explicit approval. First ask "does the stack already solve this?" (Supabase, Zod, NativeWind…).
+Ask first: **"who owns this data?"** Then place it — and never anywhere else:
+
+| State kind | Home | Never |
+|---|---|---|
+| **UI state** (toggle, focus, sheet open, local step) | Local `useState`/`useReducer` in the component/hook | A global store for screen-local concerns |
+| **Server state** (anything from the DB) | **TanStack Query** in the feature hook — `queryFn`/`mutationFn` call the service → repository (Architecture Gate intact) | `useEffect`+`useState` fetching; copying server data into a client store |
+| **Form state** | **React Hook Form** + Zod resolver (schemas from `@momlee/core`) | Hand-rolled per-field `useState` across a form |
+| **Global client state** (auth session, locale/direction) | ONLY when nothing else fits — **per-store Maor approval** | "Zustand everywhere"; a store per feature; caching server data globally |
+
+Server-owned data: the TanStack Query cache IS the state — don't mirror it.
+Screen-owned: keep it local. Truly app-wide: rare — justify it or it doesn't exist.
+
+## Stack discipline & Dependency Budget
+
+- **Don't add a dependency if the feature can be built in under 100 LOC** with
+  the existing stack. Write the 100 lines: we own them, they can't be
+  deprecated, they add zero bundle weight and zero supply-chain risk.
+- **Every dependency requires written justification** — print BEFORE installing:
+
+```
+DEPENDENCY GATE: <package>
+- Under-100-LOC test: <can the existing stack build this? why not>
+- Justification: <what it does that's worth owning a dependency for>
+- Cost: <bundle size, native code? (breaks Expo Go), transitive deps,
+         maintenance, data it collects (SDK -> momlee-data-inventory)>
+Verdict: BUILD IT (<100 LOC) | ADD — needs Maor's approval + a stack.md row in the same change
+```
+
+- Do **not** introduce a library/SDK/service that is not in `../../knowledge/stack.md` without explicit approval. First ask "does the stack already solve this?" (Supabase, Zod, NativeWind, TanStack Query, RHF…).
 - Run `pnpm audit` / `npx expo-doctor`. Pin versions, commit the lockfile (`pnpm-lock.yaml`), review new deps.
 - TypeScript `strict` everywhere; no `any` (use `unknown` + narrowing) — especially in **auth, roles, payments**, and API responses. Zod is the source of truth for runtime validation (`z.infer` for the type).
 - Naming: files `kebab-case`, components `PascalCase`, hooks `useX`, packages `@momlee/<name>`. Full conventions: `../../knowledge/conventions.md`.

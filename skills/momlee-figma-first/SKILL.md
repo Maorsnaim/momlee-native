@@ -92,7 +92,7 @@ The Figma node already encodes most of the screen. **Read it from the file; neve
 | When you are… | Use skill |
 |---|---|
 | Styling: choosing colors/spacing/type/radius/shadow, reading or adding tokens | **momlee-design-system** |
-| Writing Expo/RN structure, NativeWind, data access (Screen → Hook → Service → Repository), package boundaries, stack choices | **momlee-react-native** |
+| Writing Expo/RN structure, NativeWind, data access (Screen → Hook → Service → Repository), state/forms decisions, adding a dependency, package boundaries | **momlee-react-native** |
 | Anything directional: layout, logical props, i18n strings, `dir`/`I18nManager`, RTL QA | **momlee-rtl** |
 | Accessibility: roles, labels, hit targets, contrast, focus order, Dynamic Type | **momlee-accessibility** |
 | Wiring data/actions, auth, roles, validation, RLS, secrets, webhooks | **momlee-security** |

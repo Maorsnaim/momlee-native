@@ -18,6 +18,9 @@
 | **Design tokens** | `@momlee/tokens` | Single source of truth — color, spacing, typography, radius, shadows. Derived from Figma variables. Nothing defines a color/spacing outside this package. |
 | **Language** | TypeScript (strict) | Every package. No `any`. |
 | **Validation** | **Zod** | Shared schemas in `@momlee/core`; `z.infer` for the type. |
+| **Server state** | **TanStack Query** (`@tanstack/react-query`) | Decided 2026-06-11. The ONLY home for server state — lives in feature hooks; `queryFn`/`mutationFn` call the service → repository (Architecture Gate). Never duplicate server data into a client store. |
+| **Forms** | **React Hook Form** (+ Zod resolver) | Decided 2026-06-11. All form state; validation via the shared Zod schemas from `@momlee/core`. No hand-rolled multi-field state. |
+| **Global client state** | **None by default** | UI state = local; server state = TanStack Query; forms = RHF. A global store (Zustand etc.) ONLY when nothing else fits — per-case Maor approval. |
 | **Backend / DB** | **Supabase + PostgreSQL** | RLS on every table from day one. |
 | **Auth** | Supabase Auth — Phone Verification | Phone OTP via **Twilio Verify**. Future swap to **Vonage** possible — wrap OTP sending behind a thin abstraction, never call Twilio from the UI. |
 | **Storage** | Supabase Storage | Profile images, media. Buckets with RLS; ownership verified before signed URLs. |
@@ -36,7 +39,13 @@
 ## Guiding architectural principle
 - **Everything shareable is shared** (`packages/`): tokens, types, Zod schemas, domain logic, Supabase data layer, i18n.
 - **Only the visual primitives** are written per platform, because rendering differs fundamentally. Native is the one we build now.
-- Each provider integration (SMS, KYC, billing) is **wrapped in an abstraction** in `@momlee/core`, so swaps (Twilio→Vonage, Persona↔Stripe Identity, Stripe↔IAP) never touch the UI or logic.
+- Each provider integration (SMS, KYC, billing, analytics) is **wrapped in an abstraction** in `@momlee/core`, so swaps (Twilio→Vonage, Persona↔Stripe Identity, Stripe↔IAP, PostHog→other) never touch the UI or logic.
+
+## Dependency Budget (2026-06-11)
+
+- **Don't add a dependency if the feature can be built in under 100 LOC** with the existing stack — write the 100 lines instead.
+- **Every dependency requires written justification** (the `DEPENDENCY GATE` block in **momlee-react-native**), Maor's approval, and a row in the table above — in the same change.
+- Prefer Expo-supported, JS-only libraries (the Expo Go path is load-bearing — see `dev-environment.md`); any SDK that collects data goes through `data-inventory.md` first.
 
 ## Notes captured during planning
 1. **NativeWind** is the React Native styling layer — same Tailwind/token syntax, one design language across platforms.
