@@ -158,10 +158,13 @@ screen tests in `apps/mobile/src/app/__tests__/phone.test.tsx`.
 
 ## Name screen — implementation notes (2026-06-12)
 
-- Top Nav variant ON (skip + back + progress); back rendered DISABLED per
-  frames 12-15 (OTP can't be re-entered). Progress measured 13.75%.
-- Skip advances to BirthDate WITHOUT saving — assumption from the linear
-  flow (no annotation); Maor to confirm.
+- Top Nav variant ON; back rendered DISABLED per frames 12-15 (OTP can't be
+  re-entered) — the disabled arrow uses the fg-quaternary-(400) token.
+- **NO SKIP on the name step** (Maor, 2026-06-12: mandatory). The template
+  keeps skip support for future steps.
+- **Progress is DYNAMIC** (Maor): derived from ONBOARDING_PROFILE_STEPS in
+  @momlee/core — (index+1)/(steps+1). Steps will be added/removed over time;
+  the registry is the single source. Figma's hand-placed 13.75% superseded.
 - **Valid state indicator** (the green check — Maor's name, 2026-06-12):
   appears only when the value is VALID — (1) HEBREW ONLY at this stage
   (English names arrive with future expansion), (2) min 2 characters
