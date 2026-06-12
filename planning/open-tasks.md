@@ -301,3 +301,11 @@ STILL OPEN:
 - [ ] M4 regenerate database.types.ts after the live migration applies
 - [ ] Live security deploy (see the security section above)
 
+## Mechanical-enforcement additions (2026-06-12)
+
+Per Maor ("mechanical checks over memory text"): the asset-color lesson is
+now machine-enforced — `check-token-provenance.mjs` in CI (every token value
+must cite its Figma variable on the same line; caught touchTarget on run #1)
++ an eslint rule banning hex literals in color-like JSX props. Also live:
+the TextInput writingDirection rule in check-rtl.mjs (caught OtpInput run #1).
+
