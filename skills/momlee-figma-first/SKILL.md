@@ -134,3 +134,15 @@ its OWN row ABOVE `Page Head`, and the heart NEVER leaves the Page Head start
 side. Rule: when adding an element beyond the frame, the template/set defines
 its placement — open it; if it's hidden/absent there too, ASK Maor.
 
+## Asset-color rule — opaque assets ALWAYS get read (2026-06-12)
+
+The MCP returns icons/vectors as opaque asset URLs — their paints are
+INVISIBLE in the generated code. For EVERY state/variant being implemented,
+if an icon renders as an asset URL: download it and read its stroke/fill
+BEFORE writing code, then resolve the paint to a token (ask Maor if the
+variable name can't be resolved). "I already have a pattern for this state"
+is NOT a source — the disabled back arrow shipped as an opacity wash when the
+asset (one curl away) said fg-quaternary-(400). The check icon, read
+properly the same day, got its real color. Same screen, two outcomes — the
+difference was reading the asset.
+
