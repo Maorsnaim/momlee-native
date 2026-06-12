@@ -75,6 +75,10 @@ FULL scale confirmed from the Typography sheet (node 1023:36715, 2026-06-11):
 (64 box, display-sm digits) matches the screens; component renamed `OTP Field
 base`. New tokens: `border-brand_alt` + `text-brand-tertiary_alt` (#b05f64).
 
+**Unresolved variable name:** the FullNameField check icon bakes `#16a34a`
+(green-600); the bound Figma variable name could not be resolved — Maor to
+confirm the token name (code interim: `utility.success`).
+
 **Per-screen issues:**
 
 - **Stray font:** the phone error text uses `Brown LL Heb: Medium` instead of Noto Sans Hebrew (Phone/UnsupportedCountryError screen).

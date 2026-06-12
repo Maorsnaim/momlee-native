@@ -156,3 +156,13 @@ screen tests in `apps/mobile/src/app/__tests__/phone.test.tsx`.
    requires its one suggestion tap — an OS limit). Verify end-to-end when
    Twilio Verify + Supabase Phone Auth go live.
 
+## Name screen — implementation notes (2026-06-12)
+
+- Top Nav variant ON (skip + back + progress); back rendered DISABLED per
+  frames 12-15 (OTP can't be re-entered). Progress measured 13.75%.
+- Skip advances to BirthDate WITHOUT saving — assumption from the linear
+  flow (no annotation); Maor to confirm.
+- Validation: both names required (trim>0); NO inline error copy in Figma —
+  the CTA simply stays disabled. RHF + shared Zod schema (@momlee/core).
+- The name is PII: onboarding store only, never in analytics payloads.
+

@@ -39,6 +39,7 @@ From the Mom onboarding Figma. **All are "planned" — not built yet.**
 | Input (+INPUT_TEXT_STYLE) | the Figma `Input` base (17297:8153): five states Empty/Focused/Filled/Error/Disabled + ExtrasBefore/After slots | field compositions build on it: Forms/PhoneField (built), Forms/FullNameField + Forms/DateOfBirthField (when Name/BirthDate screens land), Forms/CountryDropdown (to be re-composed on Input slots) |
 | PhoneField | LTR digits row: pressable dial box + number | dial press reopens country selector |
 | CountryDropdown (+flags.ts, 48 Figma flag SVGs) | inline type-to-search dropdown, Israel default | per screen-04 annotation |
+| FullNameField | Figma `Forms / FullNameField` (17333:96818): two Input-base fields, first name at START, green check on filled (Icons-library `check`, token utility.success) | Name screens 12-15 |
 | OtpFieldBase | the Figma `OTP Field base` (1106:66560, renamed 2026-06-12): Size xs64(display-sm digits — the screens)/sm64(display-lg)/md80/lg96 × State Placeholder/Filled/Focused(border-brand-alt, no ring)/Disabled/Error |
 | OtpInput | composes 6× OtpFieldBase (xs); autofocus on entry; real Focused on the active cell; auto-submit 450ms after the 6th digit (so it's seen); Error state on failed code | |
 | BrandMark | one component, `variant: 'wordmark' | 'heart'` (Figma variants) | brand marks never mirror |
