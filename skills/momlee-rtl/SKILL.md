@@ -97,3 +97,15 @@ Maor authored a mirrored English frame (03_Onboarding/English/.../Phone/Empty) t
 | Text alignment | right | left | follows language (`textAlign:'auto'`) |
 
 In code: `const FORWARD_ICON = direction === 'rtl' ? 'arrow-back' : 'arrow-forward'` (see `IconCta.tsx`) — derive from the i18n `direction`, never hardcode a side. In Figma: directional components keep mirrored variants (arrow-left ↔ arrow-right); content/logos do NOT mirror.
+
+## TextInput has NO RTL base — declare direction, always (2026-06-12)
+
+AppText solves RTL for `Text`, but **`TextInput` is a separate primitive with
+no base**: without an explicit `writingDirection` a Hebrew field hugs LEFT
+under native RTL (the Name-fields regression). The Input primitive now sets
+`{ writingDirection: 'rtl', textAlign: 'auto' }` by default ('ltr' is the
+sanctioned digits exception). MECHANICALLY ENFORCED: `check-rtl.mjs` fails
+any file rendering `<TextInput>` without an explicit `writingDirection` —
+even invisible inputs must declare (it caught OtpInput's hidden input on the
+first run).
+

@@ -162,7 +162,11 @@ screen tests in `apps/mobile/src/app/__tests__/phone.test.tsx`.
   frames 12-15 (OTP can't be re-entered). Progress measured 13.75%.
 - Skip advances to BirthDate WITHOUT saving — assumption from the linear
   flow (no annotation); Maor to confirm.
-- Validation: both names required (trim>0); NO inline error copy in Figma —
-  the CTA simply stays disabled. RHF + shared Zod schema (@momlee/core).
+- **Valid state indicator** (the green check — Maor's name, 2026-06-12):
+  appears only when the value is VALID — (1) HEBREW ONLY at this stage
+  (English names arrive with future expansion), (2) min 2 characters
+  ("גל"/"כהן" valid, "א"/"נ" not). Invalid non-empty entry shows the exact
+  copy: "שם פרטי ושם משפחה בעברית, 2 תווים לפחות". Shared Zod
+  `hebrewNameField` in @momlee/core gates the CTA via RHF.
 - The name is PII: onboarding store only, never in analytics payloads.
 
