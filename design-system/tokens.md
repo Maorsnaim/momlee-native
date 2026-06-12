@@ -86,3 +86,12 @@ confirm the token name (code interim: `utility.success`).
 - All scales are now CONFIRMED from the documentation sheets — nothing provisional remains.
 
 > Note: `font-family/font-family-body` maps to the `fontFamily.sans` role token — always reference typography via the role token in code, never the raw family name.
+
+## dim — component dimensions (2026-06-12)
+
+All structural geometry is tokenized in the `dim` group (icons 20/16/15,
+button boxes 32-48, OTP cells 64/80/96, progress track 8, focus ring 2+2,
+logomark 19, flags 21x15, dial box 63, hero 234, logos 217/121, headline max
+260, country list max 264, social label gap 10*). Each value cites its Figma
+node. (*the 10px gap mirrors the still-untokenized Figma value — flagged.)
+

@@ -100,3 +100,19 @@ ExtrasBefore/After slots) → field compositions (`Forms/PhoneField`,
 compose the base. Use **Maor's component NAMES** — don't invent local names
 (real case: the Input base was wrongly named `UnderlineField`; renamed).
 Before building any field, pull its Figma component and its base.
+
+## The tokens-everything law (Maor, 2026-06-12) — MACHINE-ENFORCED
+
+"כל צבע, מספר, פונט — חייב להיות טוקן." A raw design value is a BLOCKING
+eslint error, not a style choice:
+- numeric literal on a design style key (width/height/padding/margin/gap/
+  radius/font-size/line-height/letter-spacing/offsets) → error
+- hex anywhere (className, style, color-like props) → error
+- raw fontFamily / font-* weight classes → error
+- every token VALUE must cite its Figma variable on its line
+  (check-token-provenance.mjs in CI)
+Structural geometry lives in the `dim` token group (@momlee/tokens) — button
+boxes, OTP cells, icons, flags, etc., each with provenance. Layout semantics
+(flex, opacity, zIndex, elevation) remain free. Tests are exempt (they probe
+styles). Missing a token? Define it in Figma first, then sync — never invent.
+
