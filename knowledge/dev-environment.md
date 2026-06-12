@@ -77,6 +77,22 @@ Then press `w` (web, no Mac), `a` (Android emulator), `i` (iOS Simulator — nee
 
 > **SDK version — pinned to Expo SDK 54 (on purpose).** The app targets **Expo SDK 54** so the **App Store Expo Go runs it on a physical iPhone via QR — no Xcode, no dev build**. We tried SDK 56 first; the App Store Expo Go refused it ("Project is incompatible with this version of Expo Go") because the store app lags brand-new SDKs. Lesson: **stay on an SDK the store Expo Go supports** (currently 54) so both Maor and Sivan can test on real devices with plain Expo Go. Only bump the SDK once the store Expo Go supports it. (The iOS Simulator can run any SDK, so it's not a reliable signal for real-device compatibility.)
 
+## Dev client era (2026-06-12) — Expo Go retired for daily work
+
+Maor's decision: the app now runs as a **custom dev client** (expo-dev-client)
+so native modules beyond the Expo Go set (e.g. Rive) can land.
+
+- **Maor (has a Mac):** `npx expo run:ios` builds and installs the dev client
+  on the simulator/device (first build ~5-15 min; rebuild ONLY when native
+  deps/config change). Daily loop stays `pnpm dev` — the dev client replaces
+  Expo Go as the shell. Generated `ios/`/`android/` are CNG output and
+  GITIGNORED — never committed.
+- **Sivan (no Mac):** dev client via the cloud: `eas build --profile
+  development -p ios` → install from the EAS link → same `pnpm dev` loop.
+  `expo run:ios` is Mac-only; everything else is identical.
+- Adding a NATIVE dependency = Dependency Gate + a dev-client REBUILD for
+  everyone (announce in open-tasks.md).
+
 ## Daily dev loop (no QR re-scanning)
 
 - Start ONE long-lived server on the FIXED port: `cd apps/mobile && pnpm dev`
