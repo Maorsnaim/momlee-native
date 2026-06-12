@@ -19,7 +19,15 @@ in the app repo). What was fixed:
 5. 6 legacy Edge Functions (service-role + open CORS) → **deleted from the repo**.
 6. `/api/geocode` had no auth/rate-limit → now authenticated + 30 req/min.
 
-### ⚠️ Still PENDING — the live environment is NOT yet protected
+### ✅ DEPLOYED TO LIVE (2026-06-12, via Maor's token)
+
+The security migration (20260609200000) + onboarding_events (20260610120000)
++ phone-first signup (20260612210000) are APPLIED and VERIFIED on production:
+buckets private, users RLS + user_display_info live, events table with RLS,
+email/display_name nullable, phone-aware handle_new_user. A real OTP SMS
+request returned 200. database.types.ts regenerated from live.
+
+### ⚠️ Still PENDING from the original list
 
 The code is fixed, but the fixes are not live until these run against
 **production Supabase** (coordinate with Maor before touching live):
@@ -308,4 +316,10 @@ now machine-enforced — `check-token-provenance.mjs` in CI (every token value
 must cite its Figma variable on the same line; caught touchTarget on run #1)
 + an eslint rule banning hex literals in color-like JSX props. Also live:
 the TextInput writingDirection rule in check-rtl.mjs (caught OtpInput run #1).
+
+## Still open after the live deploy (2026-06-12)
+- [ ] Delete the 6 legacy Edge Functions from the Supabase dashboard (still deployed)
+- [ ] Rotate Mapbox tokens (old exposure) + ROTATE THE TWILIO AUTH TOKEN (pasted in chat)
+- [ ] Maor: delete the temporary Supabase access token (used for db push, no longer needed)
+- [ ] Configure Test Phone Numbers (972528547424=123456 format) to test without SMS costs
 
